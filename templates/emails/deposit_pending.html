@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Deposit Confirmation</h2>
+        </div>
+        <div class="content">
+            <p>Hello {{ user.username }},</p>
+            <p>Your deposit request has been successfully sent! Awaiting confirmation</p>
+
+            <!-- Similar structure to deposit confirmation but with deposit details -->
+            <div class="highlight">
+                <h3>Deposit Details</h3>
+                <p><strong>Amount:</strong> ${{ amount|floatformat:2 }}</p>
+                <p><strong>Payment Method:</strong> {{ deposit_method.get_crypto_type_display }}</p>
+                <p><strong>Status:</strong> Pending Approval</p>
+                <p><strong>Reference ID:</strong> {{ transaction.id }}</p>
+
+                {% if deposit_method.instructions %}
+                <div class="instructions">
+                    <h4>Payment Instructions:</h4>
+                    {{ deposit_method.instructions|safe }}
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="footer">
+            <p>Thank you for choosing Nexa Wealth!</p>
+            <p>© {% now "Y" %} Nexa Wealth. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

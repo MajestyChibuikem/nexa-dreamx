@@ -1,0 +1,69 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+User - {{ investment.user.first_name }} {{ investment.user.last_name }}
+{% endblock title %}
+
+{% block page_title %}
+User - {{ investment.user.first_name }} {{ investment.user.last_name }}
+{% endblock page_title %}
+
+{% block content %}
+<div class="bg-[#2C2C2C] w-full p-5 rounded-sm">
+    <div class="space-y-5">
+        <p class="flex justify-between">
+            <span class="text-gray-600">Investment ID:</span>
+            <span class="font-medium">{{ investment.id }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">User:</span>
+            <span class="font-medium">{{ investment.user }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Plan:</span>
+            <span class="font-medium">{{ investment.plan }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Wallet:</span>
+            <span class="font-medium">{{ investment.wallet }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Amount:</span>
+            <span class="font-medium">${{ investment.amount }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Start Date:</span>
+            <span class="font-medium">{{ investment.start_date }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">End Date:</span>
+            <span class="font-medium">{{ investment.end_date }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Status:</span>
+            <span class="font-medium">
+                {% if investment.is_active %}
+                <span class="text-green-500">Active</span>
+                {% else %}
+                <span class="text-red-500">Inactive</span>
+                {% endif %}
+            </span>
+        </p>
+
+        <!-- Buttons for Edit and Delete -->
+        <div class="flex justify-end space-x-4 mt-5">
+            <a href="{% url 'admin:investment-update' investment.id %}"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Edit Investment
+            </a>
+            <a href="{% url 'admin:investment-delete' investment.id %}"
+                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                Delete Investment
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Investments
+{% endblock title %}
+
+{% block page_title %}
+Investments
+{% endblock page_title %}
+
+{% block content %}
+<div class="w-full">
+    <!-- Header -->
+    <div class="flex bg-blue-600 text-black p-2 rounded-t-lg">
+        <div class="flex-1 text-center">User</div>
+        <div class="flex-1 text-center">Plan</div>
+        <div class="flex-1 text-center">Amount</div>
+        <div class="flex-1 text-center">Start Date</div>
+        <div class="flex-1 text-center">End Date</div>
+        <div class="flex-1 text-center">Status</div>
+    </div>
+    <!-- Rows -->
+    <div class="space-y-2">
+        {% for investment in investments %}
+        <div class="flex bg-[#2C2C2C] p-3 rounded items-center">
+            <div class="flex-1 text-center text-white">{{ investment.user.email }}</div>
+            <div class="flex-1 text-center text-white">{{ investment.plan.name }}</div>
+            <div class="flex-1 text-center text-green-500">$ {{ investment.amount|floatformat:2|intcomma }}</div>
+            <div class="flex-1 text-center text-white">{{ investment.start_date|date:"m/d/Y" }}</div>
+            <div class="flex-1 text-center text-white">{{ investment.end_date|date:"m/d/Y" }}</div>
+            <div class="flex-1 text-center text-white">
+                {% if investment.is_active %}
+                <span class="px-3 py-1 bg-green-600 rounded">Active</span>
+                {% else %}
+                <span class="px-3 py-1 bg-red-600 rounded">Inactive</span>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center p-3 text-white">No investments found.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

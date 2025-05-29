@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexa Wealth - {% block title %}{% endblock %}</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/tabler-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="min-h-screen flex bg-gray-900">
+        <!-- Main Content -->
+        <div class="w-full flex items-center justify-center">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <script src="{% static 'js/particles.min.js' %}"></script>
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 100 },
+                shape: { type: "star" },
+                size: { value: 2 },
+                move: { speed: 1 },
+                opacity: { value: 0.5 },
+            },
+        });
+    </script>
+</body>
+
+</html>

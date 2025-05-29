@@ -1,0 +1,80 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Invest in {{ plan.name }}
+{% endblock title %}
+
+{% block page_title %}
+Invest in {{ plan.name }}
+{% endblock page_title %}
+
+{% block content %}
+<div class="p-5 border-2 border-blue-700 rounded-md shadow-lg shadow-blue-600 bg-[#2C2C2C]">
+    {% if form.errors %}
+    <div class="border border-red-200 bg-red-50 text-red-700 px-4 py-3 rounded-lg">
+
+        <ul class="mt-1 list-disc list-inside text-sm">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ error|escape }}</li>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error|escape }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Investment Rules -->
+    <div class="bg-gray-800 p-7 rounded-lg shadow-md text-white space-y-6">
+        <h2 class="text-xl font-normal">Investment Rules</h2>
+        <ul class="list-disc pl-5 space-y-2 text-gray-300">
+            <li>Minimum investment amount: <strong>${{ plan.min_amount|floatformat:2|intcomma:2 }}</strong>.</li>
+            <li>Maximum investment amount: <strong>${{ plan.max_amount|floatformat:2|intcomma:2 }}</strong>.</li>
+            <li>Investments are locked for a specified duration according to the plan.</li>
+            <li>Ensure you have sufficient funds in your selected wallet before investing.</li>
+            <li>Investments cannot be canceled or withdrawn before maturity.</li>
+        </ul>
+    </div>
+
+    <form method="post" class="space-y-5 mt-5">
+        {% csrf_token %}
+
+        <!-- Hidden plan field -->
+        {{ form.plan }}
+
+        <!-- Wallet select field -->
+        <div class="w-full space-y-2">
+            <label for="{{ form.wallet.id_for_label }}" class="font-medium text-sm">Wallet</label>
+            <select name="wallet" id="id_wallet"
+                class="p-3 border border-blue-700 focus:shadow-blue-600 shadow-md bg-transparent outline-none duration-300 w-full text-lg text-white">
+                {% for value, label in form.wallet.field.choices %}
+                <option value="{{ value }}" class="text-black">
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+            {% if form.wallet.errors %}
+            <div class="text-danger">{{ form.wallet.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Amount input field -->
+        <div class="form-group">
+            <label for="{{ form.amount.id_for_label }}" class="font-medium text-sm">Amount</label>
+            <input type="number"
+                class="p-3 border border-blue-700 focus:shadow-blue-600 shadow-md bg-transparent outline-none duration-300 w-full text-lg text-white"
+                id="id_amount" name="amount" placeholder="0.00">
+            {% if form.amount.errors %}
+            <div class="text-danger">{{ form.amount.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit"
+            class="block w-full p-3 bg-blue-800 text-white font-medium rounded-sm hover:bg-blue-700 duration-300">Invest</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexa Wealth - {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/tabler-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="bg-black text-gray-100 antialiased">
+    <!-- Animated background -->
+    <div id="particles-js" class="fixed inset-0 -z-10 opacity-20"></div>
+
+    {% include './header.html' %}
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-br from-blue-900/30 to-black/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-4">
+            <div class="max-w-3xl">
+                <h1
+                    class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                    Welcome Back, Trader!
+                </h1>
+                <div class="mt-4 flex items-center space-x-2 text-blue-300">
+                    <i class="ti ti-home-2 text-xl"></i>
+                    <span class="text-lg font-medium">Dashboard / {% block page_title %}{% endblock %}</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-blue-900/50 mt-24 bg-gradient-to-b from-black/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Logo Section -->
+            <div class="md:col-span-1">
+                <a href="{% url 'public:home' %}" class="inline-block">
+                    <img src="{% static 'images/logo.png' %}" alt="Nexa Wealth Logo"
+                        class="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                </a>
+                <p class="mt-4 text-sm text-gray-400">Advanced Cryptocurrency Trading Platform</p>
+            </div>
+
+            <!-- Links -->
+            <div class="space-y-4">
+                <h3 class="text-blue-400 font-semibold">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Terms of Service</a>
+                    </li>
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Cookie Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div class="space-y-4">
+                <h3 class="text-blue-400 font-semibold">Resources</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Documentation</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">API Reference</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">Support Center</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-4">
+                <h3 class="text-blue-400 font-semibold">Connect</h3>
+                <div class="w-full y-2">
+                    <div class="container mx-auto px-4">
+                        <div class="flex flex-col md:flex-row justify-between items-center text-sm">
+                            <div class="space-y-4 text-gray-300">
+                                <a href="mailto:help.nexawealth@gmail.com"
+                                    class="flex items-center hover:text-blue-400 transition-colors">
+                                    <i class="ti ti-mail mr-2"></i>help.nexawealth@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-blue-900/50 py-6 bg-black/30 backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+                <p class="text-sm text-gray-400">
+                    © 2025 Nexa Wealth. All rights reserved.<br class="md:hidden">
+                    <span class="md:mx-2">•</span> Secured with <i class="ti ti-shield-lock text-blue-400"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/particles.min.js' %}"></script>
+    <script>
+        // Enhanced Particles Configuration
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#3B82F6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: false },
+                size: { value: 2, random: true },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Enhanced Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden'); mobileMenu.classList.toggle('animate-slide-down');
+        });
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/681dd6137aae20190f43b30d/1iqq8ofbm';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+
+</html>

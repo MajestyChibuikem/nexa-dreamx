@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Investment Confirmation</h2>
+        </div>
+        <div class="content">
+            <p>Hello {{ user.username }},</p>
+            <p>Your investment has been successfully created!</p>
+
+            <div class="highlight">
+                <h3>Investment Details</h3>
+                <p><strong>Plan:</strong> {{ investment.plan.name }}</p>
+                <p><strong>Amount:</strong> ${{ investment.amount|floatformat:2 }}</p>
+                <p><strong>Duration:</strong> {{ investment.plan.duration }} days</p>
+                <p><strong>Expected Return:</strong> ${{ expected_return|floatformat:2 }}</p>
+                <p><strong>Start Date:</strong> {{ investment.start_date|date:"F j, Y" }}</p>
+                <p><strong>Maturity Date:</strong> {{ investment.end_date|date:"F j, Y" }}</p>
+            </div>
+
+            <p>You can track your investment progress in your dashboard at any time.</p>
+            <p>If you didn't initiate this investment, please contact our support team immediately.</p>
+        </div>
+        <div class="footer">
+            <p>Thank you for choosing Nexa Wealth!</p>
+            <p>© {% now "Y" %} Nexa Wealth. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

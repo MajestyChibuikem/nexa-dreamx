@@ -1,0 +1,148 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+
+{% block title %}About Us - Nexa Wealth{% endblock title %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb Section -->
+<header class="relative bg-gray-900 py-24">
+    <div class="absolute inset-0 bg-[url('{% static 'images/056.jpg' %}')] bg-cover bg-center opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center space-y-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                About <span class="text-green-400">Nexa Wealth</span>
+            </h1>
+            <nav aria-label="Breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-sm font-medium text-gray-300">
+                    <li>
+                        <a href="{% url 'public:home' %}"
+                            class="flex items-center hover:text-green-400 transition-colors">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                    <li class="text-gray-400" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<section class="py-16 bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 xl:gap-16">
+            <!-- Image Section -->
+            <div class="relative group">
+                <div class="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="{% static 'images/cert.png' %}" alt="Nexa Wealth team discussing investments"
+                        class="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy">
+                </div>
+                <div class="absolute inset-0 border-2 border-green-400/30 rounded-2xl pointer-events-none"></div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="space-y-8">
+                <h2 class="text-3xl font-bold text-white">
+                    Empowering Investors Since <span class="text-green-400">2009</span>
+                </h2>
+
+                <!-- History Section -->
+                <div class="space-y-6">
+                    <div class="prose prose-invert">
+                        <p class="text-gray-300 leading-relaxed">
+                            Founded in 2009, Nexa Wealth emerged with a clear mission: democratize investment
+                            knowledge and create genuine opportunities for wealth creation. Our journey began...
+                        </p>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="space-y-8 border-l-2 border-green-400/30 pl-8 ml-1">
+                        <div class="relative">
+                            <div class="absolute w-4 h-4 bg-green-400 rounded-full -left-[21px] top-1"></div>
+                            <h3 class="text-xl font-semibold text-white">2014: Global Expansion</h3>
+                            <p class="mt-2 text-gray-300">Expanded services internationally, managing $200M monthly...
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute w-4 h-4 bg-green-400 rounded-full -left-[21px] top-1"></div>
+                            <h3 class="text-xl font-semibold text-white">2015: Platform InNexation</h3>
+                            <p class="mt-2 text-gray-300">Launched retail trading platform with institutional-grade...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Philosophy Section -->
+                <div class="space-y-6 pt-8 border-t border-gray-700">
+                    <h3 class="text-2xl font-bold text-white">Our Core Philosophy</h3>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="p-6 bg-gray-900 rounded-xl">
+                            <svg class="w-8 h-8 text-green-400 mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <h4 class="text-lg font-semibold text-white mb-2">Transparent Operations</h4>
+                            <p class="text-gray-300 text-sm">100% satisfaction rate maintained since 2014</p>
+                        </div>
+                        <div class="p-6 bg-gray-900 rounded-xl">
+                            <svg class="w-8 h-8 text-green-400 mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            <h4 class="text-lg font-semibold text-white mb-2">Strategic Growth</h4>
+                            <p class="text-gray-300 text-sm">Consistent 70-95% monthly returns for clients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<div class="relative py-16 bg-gray-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="relative bg-gradient-to-r from-blue-900/50 to-gray-900 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden">
+            <div class="absolute inset-0 bg-[url('{% static 'images/grid-pattern.svg' %}')] opacity-10"></div>
+            <div class="relative z-10 text-center space-y-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">
+                    Start Your Investment Journey Today
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Join thousands of satisfied investors benefiting from our transparent, results-driven approach
+                    to wealth creation. Your financial security is our top priority.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="{% url 'account_signup' %}"
+                        class="inline-flex items-center px-8 py-3 bg-green-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:-translate-y-1">
+                        Get Started
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                    <a href="#"
+                        class="inline-flex items-center px-8 py-3 border border-green-400 text-green-400 hover:bg-green-400/10 font-semibold rounded-lg transition-colors duration-300">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

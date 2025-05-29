@@ -1,0 +1,134 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Investment Plans - Nexa Wealth{% endblock title %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb Section -->
+<header class="relative bg-gray-900 py-24">
+    <div class="absolute inset-0 bg-[url('{% static 'images/056.jpg' %}')] bg-cover bg-center opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center space-y-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                Investment Plans <span class="text-blue-400">Nexa Wealth</span>
+            </h1>
+            <nav aria-label="Breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-sm font-medium text-gray-300">
+                    <li>
+                        <a href="{% url 'public:home' %}"
+                            class="flex items-center hover:text-blue-400 transition-colors">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                    <li class="text-gray-400" aria-current="page">Investment Plans</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<section class="py-16 bg-gradient-to-b from-gray-900 to-gray-800 px-4 sm:px-6">
+    <div id="plans" class="scroll-mt-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Plans Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {% for plan in plans %}
+            <div
+                class="relative group overflow-hidden rounded-2xl bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+                <!-- Popular Badge (example for a specific plan) -->
+                {% if forloop.counter == 2 %}
+                <div
+                    class="absolute top-4 right-4 bg-yellow-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full z-10">
+                    MOST POPULAR
+                </div>
+                {% endif %}
+
+                <!-- Plan Content -->
+                <div class="p-8">
+                    <!-- Plan Name -->
+                    <h3 class="text-2xl font-bold text-white mb-2">{{ plan.name }}</h3>
+                    <p class="text-blue-400 mb-6">${{ plan.min_amount|floatformat:2|intcomma }} -
+                        ${{ plan.max_amount|floatformat:2|intcomma }}</p>
+
+                    <!-- ROI Badge -->
+                    <div
+                        class="bg-blue-900/50 border border-blue-700 text-blue-300 inline-block px-4 py-2 rounded-full mb-6">
+                        <span class="font-bold text-white">{{ plan.daily_profit_percentage }}%</span> Daily Return
+                    </div>
+
+                    <!-- Features List -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Compounding available</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">{{ plan.duration_value }} {{ plan.duration_unit|lower }}
+                                duration</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">24/7 monitoring</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Instant withdrawals</span>
+                        </li>
+                    </ul>
+
+                    <!-- Invest Button -->
+                    <a href="{% url 'user:invest' plan.id %}"
+                        class="block w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-center font-medium py-3 px-6 rounded-lg transition-all duration-300 transform group-hover:-translate-y-1">
+                        Invest Now
+                        <svg class="w-4 h-4 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Hover Effect Background -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-12 text-center text-gray-500 text-sm max-w-3xl mx-auto">
+            <p>Past performance is not indicative of future results. All investments carry risk. Please read our <a
+                    href="#" class="text-blue-400 hover:underline">risk disclosure</a> before investing.</p>
+        </div>
+    </div>
+</section>
+{% endblock content %}

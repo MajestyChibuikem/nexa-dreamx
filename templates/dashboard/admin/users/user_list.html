@@ -1,0 +1,47 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Users
+{% endblock title %}
+
+{% block page_title %}
+Users
+{% endblock page_title %}
+
+{% block content %}
+<div class="w-full">
+    <!-- Table header -->
+    <div class="flex bg-blue-600 text-black p-2 rounded-t-lg">
+        <div class="flex-1 text-center">Username</div>
+        <div class="flex-1 text-center">Email</div>
+        <div class="flex-1 text-center">Mobile</div>
+        <div class="flex-1 text-center">Country</div>
+        <div class="flex-1 text-center">City</div>
+        <div class="flex-1 text-center">State</div>
+        <div class="flex-1 text-center">Zip Code</div>
+    </div>
+    <!-- Table rows -->
+    <div class="space-y-2">
+        {% for user in users %}
+        <div class="flex bg-[#2C2C2C] p-3 rounded items-center">
+            <!-- Optionally wrap the username in a link to the user detail page -->
+            <div class="flex-1 text-center text-white">
+                <a href="{% url 'admin:user-detail' user.id %}" class="hover:underline hover:text-blue-300">
+                    {{ user.username }}
+                </a>
+            </div>
+            <div class="flex-1 text-center text-white">{{ user.email|truncatechars:15 }}</div>
+            <div class="flex-1 text-center text-white">{{ user.mobile }}</div>
+            <div class="flex-1 text-center text-white">{{ user.country }}</div>
+            <div class="flex-1 text-center text-white">{{ user.city }}</div>
+            <div class="flex-1 text-center text-white">{{ user.state }}</div>
+            <div class="flex-1 text-center text-white">{{ user.zip_code }}</div>
+        </div>
+        {% empty %}
+        <div class="text-center p-3 text-white">No users found.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

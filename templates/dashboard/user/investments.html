@@ -1,0 +1,79 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Investments{% endblock %}
+{% block page_title %}Investments{% endblock %}
+
+{% block content %}
+{% include './shared/transactionsTab.html' %}
+<div class="w-full overflow-x-auto rounded-lg shadow-xl mt-6">
+    <!-- Header -->
+    <div
+        class="grid grid-cols-7 gap-4 bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-4 text-sm font-semibold text-white">
+        <div>Date</div>
+        <div class="text-center">ID</div>
+        <div class="text-center">Plan</div>
+        <div class="text-center">Amount</div>
+        <div class="text-center">Start Date</div>
+        <div class="text-center">End Date</div>
+        <div class="text-center">Status</div>
+    </div>
+
+    <!-- Body -->
+    <div class="divide-y divide-gray-700/50 bg-[#1E1E1E]">
+        {% for transaction in investments %}
+        <div class="grid grid-cols-7 gap-4 px-6 py-4 transition-colors hover:bg-[#2A2A2A]">
+            <!-- Dates -->
+            <div class="text-gray-300">{{ transaction.investment.start_date|date:"m/d/Y" }}</div>
+
+            <!-- ID -->
+            <div class="text-center">
+                <a href="{% url 'user:investment_details' transaction.id %}"
+                    class="font-mono text-sm text-blue-400 hover:text-blue-300">
+                    {{ transaction.id|truncatechars:8 }}
+                </a>
+            </div>
+
+            <!-- Plan -->
+            <div class="text-center text-gray-200">{{ transaction.investment.plan.name }}</div>
+
+            <!-- Amount -->
+            <div class="text-center text-green-400 font-medium">
+                ${{ transaction.investment.amount|floatformat:2|intcomma }}
+            </div>
+
+            <!-- Dates -->
+            <div class="text-center text-gray-300">{{ transaction.investment.start_date|date:"m/d/Y" }}</div>
+            <div class="text-center text-gray-300">{{ transaction.investment.end_date|date:"m/d/Y" }}</div>
+
+            <!-- Status -->
+            <div class="text-center">
+                <div class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
+                    {% if transaction.investment.is_active %}bg-green-500/20 text-green-400
+                    {% else %}bg-red-500/20 text-red-400{% endif %}">
+                    <div class="h-2 w-2 rounded-full mr-2
+                        {% if transaction.investment.is_active %}bg-green-400
+                        {% else %}bg-red-400{% endif %}"></div>
+                    {{ transaction.investment.is_active|yesno:"Active,Closed" }}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="py-12 text-center">
+            <div class="mx-auto max-w-md px-4">
+                <svg class="mx-auto h-16 w-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <h3 class="mt-6 text-lg font-medium text-gray-200">No investments found</h3>
+                <a href="{% url 'user:plan_list' %}"
+                    class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                    Browse Plans
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

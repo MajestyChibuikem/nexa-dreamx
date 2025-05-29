@@ -1,0 +1,142 @@
+{% load static %}
+
+<header class="w-full bg-white shadow-sm sticky top-0 z-50">
+    <nav class="container mx-auto px-4 lg:px-8">
+        <div class="flex items-center justify-between py-4">
+            <!-- Logo -->
+            <a href="{% url 'public:home' %}" class="flex-shrink-0 transform transition duration-300 hover:scale-105">
+                <img src="{% static 'images/logo.png' %}" alt="Nexa Wealth Logo" class="h-12 md:h-14">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="{% url 'public:home' %}"
+                    class="relative text-[#131722] hover:text-emerald-600 px-3 py-2 transition-colors group">
+                    <span>Home</span>
+                    <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full">
+                    </div>
+                </a>
+                <a href="{% url 'public:about' %}"
+                    class="relative text-[#131722] hover:text-emerald-600 px-3 py-2 transition-colors group">
+                    <span>About</span>
+                    <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full">
+                    </div>
+                </a>
+                <a href="{% url 'public:services' %}"
+                    class="relative text-[#131722] hover:text-emerald-600 px-3 py-2 transition-colors group">
+                    <span>Services</span>
+                    <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full">
+                    </div>
+                </a>
+                <a href="{% url 'public:plan' %}"
+                    class="relative text-[#131722] hover:text-emerald-600 px-3 py-2 transition-colors group">
+                    <span>Plans</span>
+                    <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full">
+                    </div>
+                </a>
+                <a href="{% url 'public:contact' %}"
+                    class="relative text-[#131722] hover:text-emerald-600 px-3 py-2 transition-colors group">
+                    <span>Contact</span>
+                    <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full">
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Actions -->
+            <div class="flex items-center space-x-6">
+                <!-- Login Button -->
+                <a href="{% url 'account_login' %}"
+                    class="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <i class="ti ti-user text-lg"></i>
+                    <span class="hidden md:inline font-medium">Login</span>
+                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-800 hover:text-emerald-600">
+                    <i class="ti ti-menu-2 text-3xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div id="mobileMenu"
+        class="md:hidden fixed inset-0 z-50 bg-white/95 backdrop-blur-sm transform -translate-x-full transition-transform duration-300">
+        <div class="flex items-center justify-between p-6 border-b">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10">
+            <button id="closeMenu" class="text-gray-800 hover:text-emerald-600">
+                <i class="ti ti-x text-3xl"></i>
+            </button>
+        </div>
+
+        <div class="p-6 space-y-4">
+            <a href="{% url 'public:home' %}"
+                class="flex items-center space-x-3 text-lg text-gray-800 hover:text-emerald-600 p-3 rounded-lg hover:bg-gray-50">
+                <i class="ti ti-home text-xl"></i>
+                <span>Home</span>
+            </a>
+            <a href="{% url 'public:about' %}"
+                class="flex items-center space-x-3 text-lg text-gray-800 hover:text-emerald-600 p-3 rounded-lg hover:bg-gray-50">
+                <i class="ti ti-info-circle text-xl"></i>
+                <span>About</span>
+            </a>
+            <a href="{% url 'public:services' %}"
+                class="flex items-center space-x-3 text-lg text-gray-800 hover:text-emerald-600 p-3 rounded-lg hover:bg-gray-50">
+                <i class="ti ti-building-store text-xl"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'public:plan' %}"
+                class="flex items-center space-x-3 text-lg text-gray-800 hover:text-emerald-600 p-3 rounded-lg hover:bg-gray-50">
+                <i class="ti ti-list-details text-xl"></i>
+                <span>Plans</span>
+            </a>
+            <a href="{% url 'public:contact' %}"
+                class="flex items-center space-x-3 text-lg text-gray-800 hover:text-emerald-600 p-3 rounded-lg hover:bg-gray-50">
+                <i class="ti ti-mail text-xl"></i>
+                <span>Contact</span>
+            </a>
+
+            <div class="pt-6 border-t">
+                <a href="{% url 'account_login' %}"
+                    class="flex items-center justify-center space-x-2 text-lg bg-emerald-500 text-white px-6 py-3 rounded-full hover:bg-emerald-600 transition-colors">
+                    <i class="ti ti-user"></i>
+                    <span>Login</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    // Mobile Menu Handling
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const body = document.body;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.remove('-translate-x-full');
+        body.classList.add('overflow-hidden');
+    });
+
+    closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('-translate-x-full');
+        body.classList.remove('overflow-hidden');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            mobileMenu.classList.add('-translate-x-full');
+            body.classList.remove('overflow-hidden');
+        }
+    });
+
+    // Close menu on resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            mobileMenu.classList.add('-translate-x-full');
+            body.classList.remove('overflow-hidden');
+        }
+    });
+</script>

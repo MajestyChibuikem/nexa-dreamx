@@ -1,0 +1,70 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+User - {{ user.first_name }} {{ user.last_name }}
+{% endblock title %}
+
+{% block page_title %}
+User - {{ user.first_name }} {{ user.last_name }}
+{% endblock page_title %}
+
+{% block content %}
+<div class="bg-[#2C2C2C] w-full p-5 rounded-sm">
+    <div class="space-y-5">
+        <p class="flex justify-between">
+            <span class="text-gray-600">First Name:</span>
+            <span class="font-medium">{{ user.first_name }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Last Name:</span>
+            <span class="font-medium">{{ user.last_name }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Username:</span>
+            <span class="font-medium">{{ user.username }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Email Address:</span>
+            <span class="font-medium">{{ user.email }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Mobile:</span>
+            <span class="font-medium">{{ user.mobile }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Address:</span>
+            <span class="font-medium">{{ user.address }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">City:</span>
+            <span class="font-medium">{{ user.city }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">State:</span>
+            <span class="font-medium">{{ user.state }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Zip Code:</span>
+            <span class="font-medium">{{ user.zip_code }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Country:</span>
+            <span class="font-medium">{{ user.country }}</span>
+        </p>
+
+        <!-- Buttons for Edit and Delete -->
+        <div class="flex justify-end space-x-4 mt-5">
+            <a href="{% url 'admin:user-update' user.id %}"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Edit Account
+            </a>
+            <a href="{% url 'admin:user-delete' user.id %}"
+                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                Delete Account
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

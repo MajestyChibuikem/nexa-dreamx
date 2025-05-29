@@ -1,0 +1,264 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Transaction Details{% endblock %}
+{% block page_title %}Transaction Details{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-8">
+    <!-- Status Header -->
+    <div class="text-center space-y-6">
+        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300
+             {% if transaction.status == 'PENDING' %}bg-amber-100/80 text-amber-800
+             {% elif transaction.status == 'APPROVED' %}bg-emerald-100/80 text-emerald-800
+             {% else %}bg-rose-100/80 text-rose-800{% endif %}">
+            <div class="animate-pulse">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    {% if transaction.status == 'PENDING' %}
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    {% elif transaction.status == 'APPROVED' %}
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    {% else %}
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    {% endif %}
+                </svg>
+            </div>
+            <span class="text-sm font-semibold tracking-wide">{{ transaction.get_status_display }}</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900">
+            {{ transaction.get_transaction_type_display }} Summary
+        </h1>
+    </div>
+
+    <!-- Transaction Card -->
+    <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 space-y-8 border border-gray-100/60">
+        <!-- Summary Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Transaction ID</dt>
+                <dd class="font-mono text-sm text-gray-900 flex items-center gap-3 group">
+                    <span class="bg-gray-100 px-2 py-1 rounded-md">{{ transaction.id }}</span>
+                    <button onclick="copyToClipboard('{{ transaction.id }}')"
+                        class="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-blue-600"
+                        aria-label="Copy transaction ID">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                        </svg>
+                    </button>
+                </dd>
+            </div>
+
+            <div class="space-y-2">
+                <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Date & Time</dt>
+                <dd class="text-sm text-gray-900 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ transaction.timestamp|date:"M d, Y H:i" }}
+                </dd>
+            </div>
+
+            <div class="space-y-2">
+                <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</dt>
+                <dd class="text-2xl font-bold text-blue-600/90 flex items-center gap-2">
+                    <span>${{ transaction.amount|intcomma }}</span>
+                    <span class="text-sm font-normal text-gray-500">USD</span>
+                </dd>
+            </div>
+
+            <div class="space-y-2">
+                <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Wallet Balance</dt>
+                <dd class="text-sm text-gray-900 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+                    </svg>
+                    ${{ transaction.wallet.balance|default:"0.00"|intcomma }}
+                </dd>
+            </div>
+        </div>
+
+        <!-- Payment Method Section -->
+        {% if transaction.transaction_type == 'DEPOSIT' or transaction.transaction_type == 'WITHDRAW' %}
+        <div class="border-t border-gray-100 pt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-3">
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                Payment Details
+            </h3>
+
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                <!-- Crypto Card -->
+                <div class="flex-1 p-6 bg-white rounded-xl shadow-sm border border-gray-100 w-full">
+                    <div class="flex items-start gap-5">
+                        <div class="p-3 bg-gray-100 rounded-lg">
+                            {% if transaction.deposit_method.crypto_type == 'BTC' %}
+                            <img src="{% static 'images/bitcoin.png' %}" class="h-10 w-10" alt="Bitcoin">
+                            {% elif transaction.deposit_method.crypto_type == 'ETH' %}
+                            <img src="{% static 'images/etherum.png' %}" class="h-10 w-10" alt="Ethereum">
+                            {% elif transaction.deposit_method.crypto_type == 'USDT' %}
+                            <img src="{% static 'images/usdt.png' %}" class="h-10 w-10" alt="Tether">
+                            {% elif transaction.deposit_method.crypto_type == 'DOD' %}
+                            <img src="{% static 'images/dodge.png' %}" class="h-10 w-10" alt="Dogecoin">
+                            {% endif %}
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="text-base font-semibold text-gray-900">
+                                {{ transaction.deposit_method.get_crypto_type_display }}
+                                <span class="text-sm font-normal text-gray-500 ml-2">
+                                    ({{ transaction.deposit_method.network }} Network)
+                                </span>
+                            </h4>
+                            {% if transaction.deposit_method.wallet_address %}
+                            <div class="space-y-2">
+                                <dt class="text-xs text-gray-500">Destination Address</dt>
+                                <dd class="font-mono text-sm text-gray-900 break-all flex items-center gap-3 group">
+                                    <span class="bg-gray-100 px-3 py-1.5 rounded-md">
+                                        {{ transaction.deposit_method.wallet_address|truncatechars:20 }}
+                                    </span>
+                                    <button onclick="copyToClipboard('{{ transaction.deposit_method.wallet_address }}')"
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-blue-600"
+                                        aria-label="Copy wallet address">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                                        </svg>
+                                    </button>
+                                </dd>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code Section -->
+                <div class="p-6 bg-white rounded-xl border border-gray-100 text-center space-y-4">
+                    <div class="inline-block p-3 bg-gray-100 rounded-lg">
+                        <div class="w-32 h-32 bg-gray-200 animate-pulse rounded-md"></div>
+                    </div>
+                    <p class="text-xs text-gray-500">
+                        Scan QR code for wallet address
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Investment Progress -->
+        {% if transaction.transaction_type == 'INVESTMENT' and transaction.investment %}
+        <div class="border-t border-gray-100 pt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-3">
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                </svg>
+                Investment Progress
+            </h3>
+
+            <div class="space-y-8">
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="p-4 bg-white rounded-xl border border-gray-100 text-center">
+                        <dt class="text-xs text-gray-500 mb-1">Plan Duration</dt>
+                        <dd class="text-sm font-semibold text-gray-900">
+                            {{ transaction.investment.plan.duration_value }}
+                            {{ transaction.investment.plan.get_duration_unit_display }}
+                        </dd>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-gray-100 text-center">
+                        <dt class="text-xs text-gray-500 mb-1">Daily Return</dt>
+                        <dd class="text-sm font-semibold text-emerald-600">
+                            {{ transaction.investment.plan.daily_return }}%
+                        </dd>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-gray-100 text-center">
+                        <dt class="text-xs text-gray-500 mb-1">Total Return</dt>
+                        <dd class="text-sm font-semibold text-blue-600">
+                            {{ transaction.investment.plan.total_return }}%
+                        </dd>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-gray-100 text-center">
+                        <dt class="text-xs text-gray-500 mb-1">Current Profit</dt>
+                        <dd class="text-sm font-semibold text-gray-900">
+                            {{ transaction.investment.current_profit|intcomma }}
+
+                        </dd>
+                    </div>
+                </div>
+
+                <!-- Timeline Progress -->
+                <div class="relative pt-6">
+                    <div class="flex justify-between text-xs text-gray-500 mb-3 px-2">
+                        <span>Start Date</span>
+                        <span>End Date</span>
+                    </div>
+                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
+                            style="width: {{ transaction.investment.progress_percentage }}%">
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 mt-3 px-2">
+                        <span>{{ transaction.investment.start_date|date:"M d" }}</span>
+                        <span>{{ transaction.investment.end_date|date:"M d" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Admin Notes -->
+    {% if transaction.admin_note %}
+    <div class="bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+        <h3 class="text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            Admin Notification
+        </h3>
+        <p class="text-sm text-blue-700 leading-relaxed">
+            {{ transaction.admin_note }}
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- Actions -->
+    <div class="border-t pt-6 flex justify-between items-center">
+        <a href="{% url 'user:dashboard' %}" class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Dashboard
+        </a>
+        <div class="flex items-center gap-3">
+            <button class="text-sm text-gray-600 hover:text-blue-600">
+                Download Receipt
+            </button>
+            <button class="text-sm text-gray-600 hover:text-blue-600">
+                Contact Support
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 right-4 px-4 py-2 bg-green-500 text-white rounded-lg text-sm';
+            toast.textContent = 'Copied to clipboard!';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        });
+    }
+</script>
+{% endblock content %}

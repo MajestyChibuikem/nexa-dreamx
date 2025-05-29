@@ -1,0 +1,14 @@
+<div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 md:justify-end w-full mb-5">
+    <a href="{% url 'user:deposits' %}"
+        class="px-4 py-2 md:px-6 md:py-2 bg-blue-900 hover:bg-blue-800 rounded-sm text-white text-sm md:text-base text-center transition-colors">
+        Deposit Transactions
+    </a>
+    <a href="{% url 'user:withdrawals' %}"
+        class="px-4 py-2 md:px-6 md:py-2 bg-blue-900 hover:bg-blue-800 rounded-sm text-white text-sm md:text-base text-center transition-colors">
+        Withdrawal Transactions
+    </a>
+    <a href="{% url 'user:interests' %}"
+        class="px-4 py-2 md:px-6 md:py-2 bg-blue-900 hover:bg-blue-800 rounded-sm text-white text-sm md:text-base text-center transition-colors">
+        Interest Transactions
+    </a>
+</div>

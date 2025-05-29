@@ -1,0 +1,127 @@
+{% load static %}
+
+<header class="w-full bg-[#131722] border-b border-gray-800">
+    <!-- Main Navigation -->
+    <nav class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="{% url 'user:dashboard' %}" class="flex-shrink-0">
+                <img src="{% static 'images/logo.png' %}" alt="Nexa Wealth Logo" class="h-10 md:h-12">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="{% url 'user:dashboard' %}"
+                    class="text-gray-300 hover:text-blue-400 px-3 py-2 transition-colors">
+                    Dashboard
+                </a>
+                <a href="{% url 'user:plan_list' %}"
+                    class="text-gray-300 hover:text-blue-400 px-3 py-2 transition-colors">
+                    Investments
+                </a>
+                <a href="{% url 'user:deposit_methods' %}"
+                    class="text-gray-300 hover:text-blue-400 px-3 py-2 transition-colors">
+                    Deposit
+                </a>
+                <a href="{% url 'user:withdrawal_methods' %}"
+                    class="text-gray-300 hover:text-blue-400 px-3 py-2 transition-colors">
+                    Withdraw
+                </a>
+                <a href="{% url 'user:deposits' %}"
+                    class="text-gray-300 hover:text-blue-400 px-3 py-2 transition-colors">
+                    Transactions
+                </a>
+            </div>
+
+            <!-- User Actions -->
+            <div class="flex items-center space-x-4">
+                <!-- User Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 focus:outline-none">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                            <span class="text-white">{{ request.user.first_name|slice:":1" }}</span>
+                        </div>
+                        <span class="text-gray-300">Account</span>
+                        <i class="ti ti-chevron-down text-gray-400"></i>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div
+                        class="absolute right-0 mt-2 w-48 bg-[#1a1f2d] rounded-lg shadow-xl py-2 hidden group-hover:block transition-opacity z-50">
+                        <a href="{% url 'user:profile' %}"
+                            class="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400">
+                            <i class="ti ti-user mr-2"></i> Profile
+                        </a>
+                        <a href="{% url 'account_logout' %}"
+                            class="block px-4 py-2 text-gray-300 hover:bg-blue-900/20 hover:text-blue-400">
+                            <i class="ti ti-logout mr-2"></i> Logout
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-blue-400">
+                    <i class="ti ti-menu-2 text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div id="mobileMenu"
+        class="md:hidden fixed inset-0 z-50 bg-[#131722] transform -translate-x-full transition-transform duration-300">
+        <div class="flex items-center justify-between p-4 border-b border-gray-800">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-8">
+            <button id="closeMenu" class="text-gray-300 hover:text-blue-400">
+                <i class="ti ti-x text-2xl"></i>
+            </button>
+        </div>
+
+        <div class="p-4 space-y-4">
+            <a href="{% url 'user:dashboard' %}" class="block text-gray-300 hover:text-blue-400 p-3">Dashboard</a>
+            <a href="{% url 'user:plan_list' %}" class="block text-gray-300 hover:text-blue-400 p-3">Investments</a>
+            <a href="{% url 'user:deposit_methods' %}" class="block text-gray-300 hover:text-blue-400 p-3">Deposit</a>
+            <a href="{% url 'user:withdrawal_methods' %}"
+                class="block text-gray-300 hover:text-blue-400 p-3">Withdraw</a>
+            <a href="{% url 'user:deposits' %}" class="block text-gray-300 hover:text-blue-400 p-3">Transactions</a>
+
+            <div class="pt-4 border-t border-gray-800">
+                <a href="{% url 'user:profile' %}" class="block text-gray-300 hover:text-blue-400 p-3">
+                    <i class="ti ti-user mr-2"></i> Profile
+                </a>
+                <a href="{% url 'account_logout' %}" class="block text-gray-300 hover:text-blue-400 p-3">
+                    <i class="ti ti-logout mr-2"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    // Mobile Menu Handling
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.remove('-translate-x-full');
+    });
+
+    closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('-translate-x-full');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            mobileMenu.classList.add('-translate-x-full');
+        }
+    });
+
+    // Close menu on resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            mobileMenu.classList.add('-translate-x-full');
+        }
+    });
+</script>

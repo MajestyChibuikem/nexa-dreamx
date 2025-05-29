@@ -1,0 +1,8 @@
+node_modules
+venv
+.env
+package-lock.json
+pychache
+__pychache__/
+staticfiles
+media/

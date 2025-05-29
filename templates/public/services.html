@@ -1,0 +1,475 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+
+{% block title %}Investment Services - Nexa Wealth{% endblock title %}
+
+{% block content %}
+<!-- Services Hero Section -->
+<header class="relative bg-gradient-to-br from-blue-900 to-gray-900 py-24">
+    <div class="absolute inset-0 bg-[url('{% static 'images/services-bg.jpg' %}')] bg-cover bg-center opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center space-y-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                Strategic <span class="text-blue-400">Wealth Solutions</span>
+            </h1>
+            <nav aria-label="Breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-sm font-medium text-gray-300">
+                    <li>
+                        <a href="{% url 'public:home' %}"
+                            class="flex items-center hover:text-blue-400 transition-colors">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                    <li class="text-gray-400" aria-current="page">Services</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<section class="py-24 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-20">
+            <h2
+                class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-4">
+                Next-Gen Financial Solutions
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Cutting-edge services for investors who demand more than basic wealth preservation
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 xl:gap-16">
+            <!-- Card 1 - Asset Management -->
+            <div
+                class="group relative p-8 bg-gray-800 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:bg-gray-850">
+                <div
+                    class="absolute inset-0 border border-gray-700/30 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20 group-hover:shadow-[0_0_40px_-5px_rgba(59,130,246,0.1)]">
+                </div>
+                <div
+                    class="icon-box mb-6 w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:rotate-[15deg]">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3
+                    class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Asset Management</h3>
+                <p class="mt-4 text-gray-400 leading-relaxed">Professional management of securities and assets through
+                    dynamic investment strategies tailored to your financial objectives</p>
+                <div class="mt-6 pt-6 border-t border-gray-700/50">
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Portfolio diversification</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Risk-adjusted returns</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Institutional strategies</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 2 - Wealth Management -->
+            <div
+                class="group relative p-8 bg-gray-800 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:bg-gray-850">
+                <div
+                    class="absolute inset-0 border border-gray-700/30 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20 group-hover:shadow-[0_0_40px_-5px_rgba(59,130,246,0.1)]">
+                </div>
+                <div
+                    class="icon-box mb-6 w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:rotate-[15deg]">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h3
+                    class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Wealth Management</h3>
+                <p class="mt-4 text-gray-400 leading-relaxed">Sophisticated multi-generational strategies that go beyond
+                    basic wealth preservation to aggressive growth</p>
+                <div class="mt-6 pt-6 border-t border-gray-700/50">
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Tax warfare strategies</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Legacy architecture</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Dark pool access</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 3 - Market Analytics -->
+            <div
+                class="group relative p-8 bg-gray-800 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:bg-gray-850">
+                <div
+                    class="absolute inset-0 border border-gray-700/30 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20 group-hover:shadow-[0_0_40px_-5px_rgba(59,130,246,0.1)]">
+                </div>
+                <div
+                    class="icon-box mb-6 w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:rotate-[15deg]">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
+                <h3
+                    class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Market Analytics</h3>
+                <p class="mt-4 text-gray-400 leading-relaxed">AI-powered predictive analytics that outpaces conventional
+                    market analysis by 3.8x</p>
+                <div class="mt-6 pt-6 border-t border-gray-700/50">
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Quant modeling</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Sentiment analysis</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm font-medium">Alternative data sets</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-24 bg-gradient-to-b from-gray-900 to-blue-900/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-white bg-clip-text text-transparent mb-4">
+                Institutional-Grade Process
+            </h2>
+            <p class="text-gray-300 text-xl max-w-3xl mx-auto">
+                Algorithm-driven workflow refined through $2.1B+ in managed assets
+            </p>
+        </div>
+
+        <div class="relative grid md:grid-cols-4 gap-8 lg:gap-12">
+            <!-- Connecting line -->
+            <div
+                class="absolute hidden md:block w-3/4 h-1 bg-gradient-to-r from-blue-600/30 to-blue-600/0 top-16 left-1/2 -translate-x-1/2">
+            </div>
+
+            <!-- Process Step 1 -->
+            <div class="group relative z-10">
+                <div class="process-card p-3 transition-all duration-200">
+
+                    <h3
+                        class="text-xl font-semibold bg-gradient-to-r from-blue-300 to-white bg-clip-text text-transparent">
+                        Strategic Foundation
+                    </h3>
+                    <p class="text-gray-300 mt-3 leading-relaxed">
+                        AI-powered analysis of 127 market factors to establish optimal strategy parameters
+                    </p>
+                    <div
+                        class="absolute inset-0 border-2 border-blue-500/10 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Step 2 -->
+            <div class="group relative z-10">
+                <div class="process-card p-3 transition-all duration-200">
+
+                    <h3
+                        class="text-xl font-semibold bg-gradient-to-r from-blue-300 to-white bg-clip-text text-transparent">
+                        Portfolio Architecture
+                    </h3>
+                    <p class="text-gray-300 mt-3 leading-relaxed">
+                        Multi-asset allocation across 38 global markets with dynamic rebalancing
+                    </p>
+                    <div
+                        class="absolute inset-0 border-2 border-blue-500/10 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Step 3 -->
+            <div class="group relative z-10">
+                <div class="process-card p-3 transition-all duration-200">
+
+                    <h3
+                        class="text-xl font-semibold bg-gradient-to-r from-blue-300 to-white bg-clip-text text-transparent">
+                        Risk Mitigation
+                    </h3>
+                    <p class="text-gray-300 mt-3 leading-relaxed">
+                        Real-time monitoring with 14-layer protection stack and circuit breakers
+                    </p>
+                    <div
+                        class="absolute inset-0 border-2 border-blue-500/10 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Step 4 -->
+            <div class="group relative z-10">
+                <div class="process-card p-3 transition-all duration-200">
+
+                    <h3
+                        class="text-xl font-semibold bg-gradient-to-r from-blue-300 to-white bg-clip-text text-transparent">
+                        Performance Engine
+                    </h3>
+                    <p class="text-gray-300 mt-3 leading-relaxed">
+                        Machine learning optimization with daily adjustments and quarterly deep audits
+                    </p>
+                    <div
+                        class="absolute inset-0 border-2 border-blue-500/10 rounded-2xl transition-all duration-300 group-hover:border-blue-500/20">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .process-card {
+        @apply relative p-8 bg-gray-800/40 rounded-2xl backdrop-blur-sm transition-all duration-300;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-number-gradient {
+        @apply w-16 h-16 mb-6 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center;
+        box-shadow: 0 4px 30px rgba(59, 130, 246, 0.2);
+    }
+
+    .number-glow {
+        @apply text-3xl font-bold text-white;
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+
+    .process-card:hover .number-glow {
+        animation: pulseGlow 1.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+
+        0%,
+        100% {
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        50% {
+            text-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+        }
+    }
+</style>
+
+<!-- Performance CTA -->
+<div class="relative py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div
+            class="absolute -top-32 -left-40 w-96 h-96 bg-gradient-to-r from-blue-600/20 to-transparent rounded-full blur-3xl">
+        </div>
+        <div
+            class="absolute -bottom-32 -right-40 w-96 h-96 bg-gradient-to-l from-blue-600/20 to-transparent rounded-full blur-3xl">
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="space-y-6">
+            <h2
+                class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-white bg-clip-text text-transparent">
+                Dominating Market Performance
+            </h2>
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto">
+                Quantifiable results that separate us from amateur wealth managers
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <!-- Success Rate -->
+                <div
+                    class="group relative p-8 bg-gray-800/40 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/60 hover:-translate-y-2">
+                    <div
+                        class="absolute inset-0 border border-blue-500/20 rounded-2xl transition-all duration-300 group-hover:border-blue-500/30">
+                    </div>
+                    <div
+                        class="metric-value text-6xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        95%
+                    </div>
+                    <div class="metric-label text-blue-200 font-semibold mt-4 text-lg">
+                        Success Rate
+                    </div>
+                    <div class="text-sm text-gray-400 mt-2">
+                        Across all portfolios since 2008
+                    </div>
+                    <div class="mt-4">
+                        <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="w-4/5 h-full bg-gradient-to-r from-blue-500 to-indigo-500 animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assets Managed -->
+                <div
+                    class="group relative p-8 bg-gray-800/40 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/60 hover:-translate-y-2">
+                    <div
+                        class="absolute inset-0 border border-blue-500/20 rounded-2xl transition-all duration-300 group-hover:border-blue-500/30">
+                    </div>
+                    <div
+                        class="metric-value text-6xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        $2.1B+
+                    </div>
+                    <div class="metric-label text-blue-200 font-semibold mt-4 text-lg">
+                        Assets Managed
+                    </div>
+                    <div class="text-sm text-gray-400 mt-2">
+                        Across 38 institutional clients
+                    </div>
+                    <div class="mt-4 flex justify-center space-x-1">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s">
+                        </div>
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.4s">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div
+                    class="group relative p-8 bg-gray-800/40 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/60 hover:-translate-y-2">
+                    <div
+                        class="absolute inset-0 border border-blue-500/20 rounded-2xl transition-all duration-300 group-hover:border-blue-500/30">
+                    </div>
+                    <div
+                        class="metric-value text-6xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        15+
+                    </div>
+                    <div class="metric-label text-blue-200 font-semibold mt-4 text-lg">
+                        Years Experience
+                    </div>
+                    <div class="text-sm text-gray-400 mt-2">
+                        97% client retention rate
+                    </div>
+                    <div class="mt-4 inline-flex items-center text-blue-400">
+                        <svg class="w-5 h-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                        </svg>
+                        <span class="text-sm">Top 1% Performance</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{% url 'account_signup' %}"
+                class="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 mt-12">
+                Start Building Wealth Now
+                <svg class="w-5 h-5 ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .service-card {
+        @apply p-8 bg-gray-700/20 rounded-2xl border border-gray-600/30 transition-all duration-300 hover:border-blue-400/50;
+    }
+
+    .icon-box {
+        @apply w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-sm;
+    }
+
+    .process-step {
+        @apply p-6 bg-gray-800 rounded-xl text-center hover:bg-gray-700/20 transition-colors;
+    }
+
+    .step-number {
+        @apply w-12 h-12 bg-blue-500 rounded-full text-white font-bold text-xl flex items-center justify-center mx-auto mb-4;
+    }
+
+    .step-title {
+        @apply text-lg font-semibold text-white mb-2;
+    }
+
+    .step-description {
+        @apply text-gray-400 text-sm;
+    }
+
+    .performance-metric {
+        @apply bg-white/5 p-6 rounded-xl backdrop-blur-sm;
+    }
+
+    .metric-value {
+        @apply text-4xl font-bold text-blue-400 mb-2;
+    }
+
+    .metric-label {
+        @apply text-gray-300 text-sm uppercase tracking-wider;
+    }
+
+    .cta-button {
+        @apply inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 mt-8;
+    }
+</style>
+{% endblock content %}

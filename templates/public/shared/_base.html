@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexa Wealth | {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/tabler-icons.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="bg-black text-white">
+
+    {% include './header.html' %}
+
+    <main class="container mx-auto">
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+
+    <footer class="bg-[#0B0F1F] text-white py-12 relative border-t-2 border-green-600 overflow-hidden">
+        <!-- Background Map -->
+        <div class="absolute inset-0 opacity-10 bg-cover bg-center z-0"
+            style="background-image: url('images/world-map.png');">
+        </div>
+
+        <!-- Content Container -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Main Content Grid -->
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2 space-y-4">
+                    <a href="#" class="inline-block hover:opacity-90 transition-opacity">
+                        <img src="{% static 'images/logo.png' %}" alt="Nexa Wealth Logo" class="h-10 w-auto">
+                    </a>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Empowering global investments through secure and inNexative trading solutions.
+                    </p>
+                </div>
+
+                <!-- Legal Links -->
+                <div class="space-y-4">
+                    <h3 class="font-semibold text-green-400 mb-2">Legal</h3>
+                    <nav class="flex flex-col space-y-3">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">Privacy &
+                            Policy</a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">Terms &
+                            Conditions</a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">Cookie Policy</a>
+                    </nav>
+                </div>
+
+                <!-- Contact -->
+                <div class="space-y-4 text-gray-300">
+                    <a href="mailto:help.nexawealth@gmail.com"
+                        class="flex items-center hover:text-green-400 transition-colors">
+                        <i class="ti ti-mail mr-2"></i> help.nexawealth@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Note -->
+        <div class="bg-yellow-500/10 border border-yellow-500/30 p-4 rounded-lg mb-8 flex items-start space-x-3">
+            <div class="text-yellow-400 mt-1">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm0-8a1 1 0 00-1 1v3a1 1 0 102 0V9a1 1 0 00-1-1zm0-1a1 1 0 100-2 1 1 0 000 2z" />
+                </svg>
+            </div>
+            <div class="text-yellow-300 text-sm">
+                <strong class="font-medium">Important Note:</strong> Nexa Wealth is <strong>NOT</strong>
+                a HYIP/Forex trading scheme. We operate as a regulated financial service provider.
+            </div>
+        </div>
+
+        <!-- Language & Copyright -->
+        <div class="border-t border-white/10 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="mb-4 md:mb-0" id="google_translate_element"></div>
+                <p class="text-gray-400 text-xs text-center md:text-right">
+                    © 2025 Nexa Wealth. All rights reserved.<br class="md:hidden">
+                    <span class="hidden md:inline">•</span>
+                    <a href="#" class="hover:text-white transition-colors">Legal Disclosures</a>
+                </p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <script src="{% static 'js/particles.min.js' %}"></script>
+    <script src="{% static 'js/typewriter.js' %}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.testimonialSwiper', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            },
+        });
+    </script>
+
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 100 },
+                shape: { type: "star" },
+                size: { value: 2 },
+                move: { speed: 1 },
+                opacity: { value: 0.5 },
+            },
+        });
+    </script>
+    <script>
+        new Typewriter('#typewriter', {
+            strings: ['Securely', 'Reliably'],
+            autoStart: true,
+            loop: true,
+        });
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/681dd6137aae20190f43b30d/1iqq8ofbm';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+
+</html>

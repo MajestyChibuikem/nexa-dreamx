@@ -1,0 +1,1004 @@
+{% extends './shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<section class="min-h-fit py-20 px-6 md:px-24 bg-gradient-to-br from-gray-900 via-[#091a15] to-[#092912]">
+    <div class="max-w-3/4 mx-auto flex flex-col md:flex-row items-center gap-16">
+        <!-- Left Content -->
+        <div class="md:w-[60%] w-full space-y-10" data-aos="fade-up" data-aos-delay="100">
+            <!-- Crypto Ticker Widget - Modernized -->
+            <div class="bg-gradient-to-r from-gray-800 to-[#1a2a2f] rounded-xl border border-emerald-500/20 p-1 shadow-2xl overflow-hidden backdrop-blur-sm"
+                data-aos="fade-in" data-aos-delay="200">
+                <iframe
+                    src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no"
+                    width="100%" height="36px" scrolling="no" frameborder="0" class="rounded-lg"></iframe>
+                <div
+                    class="bg-gradient-to-r from-gray-800 to-[#1a2a2f] px-4 py-2 text-sm text-emerald-100/80 text-right">
+                    <a href="https://coinlib.io" target="_blank"
+                        class="font-semibold text-emerald-400 hover:text-cyan-300 transition-all duration-300">
+                        LIVE CRYPTO PRICES ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Text -->
+            <div class="space-y-8" data-aos="fade-up" data-aos-delay="300">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                    Invest <span id="typewriter"
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400"></span><br>
+                    With <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">Nexa
+                        Wealth</span>
+                </h1>
+
+                <p class="text-xl text-gray-400 leading-relaxed max-w-xl">
+                    Next-generation wealth management powered by decentralized ledger technology and full-reserve
+                    security.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-5 pt-6" data-aos="zoom-in" data-aos-delay="400">
+                    <a href="{% url 'account_signup' %}"
+                        class="px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-700 text-white font-semibold hover:from-cyan-600 hover:to-emerald-600 transition-all duration-500 shadow-lg hover:shadow-2xl hover:-translate-y-1 text-center transform-gpu">
+                        🚀 Get Started Now
+                    </a>
+                    <a href="{% url 'public:about' %}"
+                        class="px-8 py-4 rounded-xl border-2 border-cyan-500/30 bg-gray-900/50 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300 text-center backdrop-blur-sm">
+                        ✨ Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content (Add your image/illustration here) -->
+        <!-- Lottie Animation -->
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+        <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_t9gkkhz4.json" background="transparent"
+            speed="1" style="width: 40%; height: 100%;" loop autoplay>
+        </lottie-player>
+
+    </div>
+</section>
+
+<style>
+    /* Custom gradient border for the crypto widget */
+    .gradient-border {
+        position: relative;
+        background-clip: padding-box;
+    }
+
+    .gradient-border::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin: -2px;
+        border-radius: inherit;
+        background: linear-gradient(45deg, #05966955, #0d948855);
+    }
+</style>
+
+<style>
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+            /* Reduced float for subtlety */
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const words = ["Securely", "Smartly", "Globally", "Easily"];
+        const typewriter = document.getElementById('typewriter');
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+
+        function type() {
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                typewriter.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typewriter.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typingSpeed = 1200; // Slightly shorter pause
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 400; // Slightly shorter pause
+            }
+
+            setTimeout(type, typingSpeed);
+        }
+
+        setTimeout(type, 800); // Slightly faster start
+    });
+</script>
+
+<section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-12 lg:space-y-16">
+        <!-- Heading Section -->
+        <div class="max-w-3xl mx-auto text-center space-y-6" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+                Why Choose Nexa Wealth
+            </h2>
+            <p class="text-xl text-gray-300 font-medium">
+                We Set the Pace, Others Follow
+            </p>
+            <p class="text-gray-400 leading-relaxed md:text-lg">
+                As high-conviction investors, we focus on undervalued opportunities ignored by mainstream markets.
+                Our strategy capitalizes on market inefficiencies to deliver sustainable long-term growth.
+            </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12">
+            <!-- Left Features -->
+            <div class="space-y-8 lg:space-y-10" data-aos="fade-right" data-aos-delay="200">
+                <div class="feature-card group p-3">
+                    <h5 class="text-lg font-semibold mb-3 text-green-400">Asset Management</h5>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                        Comprehensive advisory services helping clients develop and access strategic investment
+                        alternatives tailored to their goals.
+                    </p>
+                </div>
+
+                <div class="feature-card group p-3">
+                    <h5 class="text-lg font-semibold mb-3 text-green-400">Mutual Funds</h5>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                        Expert-managed portfolios leveraging market insights to grow your wealth consistently.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Center Image -->
+            <div class="flex items-center justify-center lg:py-4" data-aos="zoom-in" data-aos-delay="300">
+                <div class="relative w-full max-w-xs lg:max-w-md transform transition duration-500 hover:scale-105">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-blue-500 to-transparent opacity-20 rounded-xl blur-lg">
+                    </div>
+                    <img src="{% static 'images/tether-home.png' %}" alt="Investment strategies"
+                        class="rounded-xl shadow-2xl border-2 border-blue-500/30 relative z-10 w-full">
+                </div>
+            </div>
+
+            <!-- Right Features -->
+            <div class="space-y-8 lg:space-y-10" data-aos="fade-left" data-aos-delay="200">
+                <div class="feature-card group p-3">
+                    <h5 class="text-lg font-semibold mb-3 text-green-400">Wealth Management</h5>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                        Multi-generational wealth preservation strategies combining inNexative solutions
+                        with time-tested financial principles.
+                    </p>
+                </div>
+
+                <div class="feature-card group p-3">
+                    <h5 class="text-lg font-semibold mb-3 text-green-400">Brokerage Account</h5>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                        Secure trading environment with institutional-grade safeguards and guaranteed returns
+                        on qualified investments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .feature-card {
+        @apply p-6 rounded-xl transition-all duration-300;
+        background: linear-gradient(145deg, rgba(18, 22, 34, 1) 0%, rgba(32, 38, 55, 0.5) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.15);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 79, 255, 0.1);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const countElements = document.querySelectorAll('.countup-animation');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const originalText = element.innerText;
+                    const isCurrency = element.parentElement.textContent.includes('$');
+                    const hasPlus = element.parentElement.textContent.includes('+');
+                    const target = parseFloat(originalText.replace(/[^0-9.]/g, ''));
+
+                    let current = 0;
+                    const duration = 2000; // Animation duration in ms
+                    const startTime = Date.now();
+
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        current = Math.floor(progress * target);
+
+                        // Format number with commas
+                        element.innerText = current.toLocaleString();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            // Restore original formatting
+                            element.innerText = originalText;
+                            if (isCurrency) element.parentElement.prepend('$');
+                            if (hasPlus) element.parentElement.append('+');
+                        }
+                    };
+
+                    // Clear existing content and start animation
+                    element.innerText = '0';
+                    requestAnimationFrame(animate);
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Add to existing HTML section
+        document.querySelectorAll('[data-countup]').forEach(element => {
+            element.classList.add('countup-animation');
+            observer.observe(element);
+        });
+    });
+</script>
+
+<section class="py-16 px-6 md:px-24" data-aos="fade-up">
+    <div class="container mx-auto space-y-12">
+        <!-- Header Section -->
+        <div class="max-w-2xl mx-auto text-center space-y-6" data-aos="fade-up">
+            <h1 class="text-5xl font-bold bg-gradient-to-r from-green-400 to-purple-500 bg-clip-text text-transparent">
+                Performance Metrics
+            </h1>
+            <p class="text-lg text-gray-300 leading-relaxed md:px-16">
+                Nexa Wealth delivered exceptional results with 132% annual returns, soaring to 249.85% for monthly
+                compounded investments.
+                These gains were achieved amidst the unprecedented challenges of the COVID-19 global economic crisis.
+            </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 group">
+            <!-- Masternodes Card -->
+            <div class="bg-[#1A2030] rounded-xl p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-500/20 border border-transparent"
+                data-aos="zoom-in">
+                <div class="space-y-4 text-center">
+                    <div class="inline-block p-4 rounded-full bg-blue-500/10">
+                        <i class="ti ti-server text-blue-400 text-3xl"></i> <!-- Masternode Icon -->
+                    </div>
+                    <h3
+                        class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
+                        <span data-countup>7600</span>
+                    </h3>
+                    <p class="text-gray-400 font-medium">Operational Masternodes</p>
+                </div>
+            </div>
+
+            <!-- Deposits Card -->
+            <div class="bg-[#1A2030] rounded-xl p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-purple-500/20 border border-transparent"
+                data-aos="zoom-in" data-aos-delay="200">
+                <div class="space-y-4 text-center">
+                    <div class="inline-block p-4 rounded-full bg-purple-500/10">
+                        <i class="ti ti-currency-dollar text-purple-400 text-3xl"></i> <!-- Dollar Icon -->
+                    </div>
+                    <h3
+                        class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-300 bg-clip-text text-transparent">
+                        <span data-countup>3,294,582</span>
+                    </h3>
+                    <p class="text-gray-400 font-medium">Total Assets Managed</p>
+                    <p class="text-sm text-blue-400">Weekly Updated</p>
+                </div>
+            </div>
+
+            <!-- Users Card -->
+            <div class="bg-[#1A2030] rounded-xl p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-green-500/20 border border-transparent"
+                data-aos="zoom-in" data-aos-delay="400">
+                <div class="space-y-4 text-center">
+                    <div class="inline-block p-4 rounded-full bg-green-500/10">
+                        <i class="ti ti-users text-green-400 text-3xl"></i> <!-- Users Icon -->
+                    </div>
+                    <h3
+                        class="text-4xl font-bold bg-gradient-to-r from-green-400 to-cyan-300 bg-clip-text text-transparent">
+                        <span data-countup>32,012</span>
+                    </h3>
+                    <p class="text-gray-400 font-medium">Active Community Members</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Widget -->
+        <div class="mt-12 max-w-6xl mx-auto rounded-xl overflow-hidden shadow-2xl" data-aos="fade-up">
+            <div id="coinmarketcap-widget-coin-price-block" coins="1,1027,825,1839,5426,2010,3408" currency="USD"
+                theme="dark" transparent="true" show-symbol-logo="true"></div>
+        </div>
+    </div>
+</section>
+
+<section class="relative py-16 px-6 md:px-24">
+    <div class="container mx-auto px-6 p-7">
+        <div class="flex flex-col md:flex-row items-center justify-center space-x-5">
+            <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0" data-aos="fade-right" data-aos-duration="1000">
+                <div class="text-white">
+                    <h2 class="text-3xl font-bold mb-4">About Nexa Wealth</h2>
+                    <p class="leading-relaxed">
+                        Nexa Wealth was created in 2009 with the sole purpose of ensuring that everyone has an
+                        insight on investments and has made sure that anyone that crosses our path has a genuine
+                        encounter
+                        with the investment market. Our aim is to help others achieve their aim in life. We saw the
+                        opportunity to help others and took it, and we are passionate about it.
+                    </p>
+                    <p class="leading-relaxed mt-4">
+                        Investments are life-savers and shouldn't be rejected by anyone. You’re helping yourself and
+                        no one else.
+                        This answers the question, “Why do I invest?” A strong reason is having something in store for a
+                        rainy day or making a life-changing decision requiring financial support. This is where we come
+                        in—helping
+                        you invest in securities that yield dividends in a short period. We believe in empowering both
+                        novice and
+                        expert investors.
+                    </p>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+                <iframe class="w-full h-64 md:h-80" src="https://www.youtube.com/embed/tuUO-Q4_b5c"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6">
+    <!-- <div id="plans" class="scroll-mt-20"></div> -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <span
+                class="inline-block px-3 py-1 text-sm font-medium bg-blue-900 text-blue-300 rounded-full mb-4">Investment
+                Plans</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Tailored Trading Packages</h2>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Choose the perfect investment strategy for your financial goals.
+                <span class="text-yellow-400 font-medium">All plans support compounding.</span>
+            </p>
+        </div>
+
+        <!-- Plans Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {% for plan in plans %}
+            <div
+                class="relative group rounded-2xl bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20">
+                <!-- Popular Badge (example for a specific plan) -->
+                {% if forloop.counter == 2 %}
+                <div
+                    class="absolute top-4 right-4 bg-yellow-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full z-30">
+                    MOST POPULAR
+                </div>
+                {% endif %}
+
+                <!-- Plan Content -->
+                <div class="p-8 relative z-20">
+                    <!-- Plan Name -->
+                    <h3 class="text-2xl font-bold text-white mb-2">{{ plan.name }}</h3>
+                    <p class="text-green-400 mb-6">${{ plan.min_amount|floatformat:2|intcomma }} -
+                        ${{ plan.max_amount|floatformat:2|intcomma }}</p>
+
+                    <!-- ROI Badge -->
+                    <div
+                        class="bg-blue-900/50 border border-blue-700 text-blue-300 inline-block px-4 py-2 rounded-full mb-6">
+                        <span class="font-bold text-white">{{ plan.daily_profit_percentage }}%</span> Daily Return
+                    </div>
+
+                    <!-- Features List -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Compounding available</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">{{ plan.duration_value }} {{ plan.duration_unit|lower }}
+                                duration</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">24/7 monitoring</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-300">Instant withdrawals</span>
+                        </li>
+                    </ul>
+
+                    <!-- Invest Button -->
+                    <a href="{% url 'user:invest' plan.id %}"
+                        class="block w-full bg-gradient-to-r from-green-600 to-blue-500 hover:from-blue-500 hover:to-green-400 text-white text-center font-medium py-3 px-6 rounded-lg transition-all duration-300 transform group-hover:-translate-y-1">
+                        Invest Now
+                        <svg class="w-4 h-4 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Hover Effect Background -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-12 text-center text-gray-500 text-sm max-w-3xl mx-auto">
+            <p>Past performance is not indicative of future results. All investments carry risk. Please read our <a
+                    href="#" class="text-green-400 hover:underline">risk disclosure</a> before investing.</p>
+        </div>
+    </div>
+</section>
+
+<section class="bg-gray-900 py-16 border-t-2 border-blue-600 px-6 md:px-24">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">What Our Clients Say</h2>
+        <p class="text-gray-400 mb-12">Real stories from our happy investors.</p>
+
+        <!-- Swiper container -->
+        <div class="swiper testimonialSwiper px-12 pb-16">
+            <div class="swiper-wrapper">
+                <!-- Testimonial 1 (Male) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-1.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">Raj Patel</h3>
+                                    <p class="text-emerald-400 font-mono">Surgeon</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "Nexa Wealth simplified investing for my busy schedule. Automated portfolio management
+                                grew my savings by 18% last year, even during market fluctuations."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 (Female) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-2.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">Aisha Diallo</h3>
+                                    <p class="text-emerald-400 font-mono">Freelance Designer</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "The micro-investing feature lets me contribute small amounts regularly. Educational
+                                resources helped me master risk management."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 (Male) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-3.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">Michael Chen</h3>
+                                    <p class="text-emerald-400 font-mono">FinTech CEO</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "The AI-driven strategies outperformed our in-house funds by 22% last quarter. Finally,
+                                institutional-grade tools accessible to serious investors."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 (Male) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-5.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">David Patel</h3>
+                                    <p class="text-emerald-400 font-mono">Portfolio Manager</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "Risk assessment models here surpass what we used at Goldman Sachs. The real-time
+                                analytics dashboard alone is worth the premium tier."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 5 (Female) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-4.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">Sarah Johnson</h3>
+                                    <p class="text-emerald-400 font-mono">Sustainability Consultant</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "ESG integration that's actually verifiable, not just greenwashing. My ethical
+                                investment portfolio grew 18% while maintaining strict criteria."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 6 (Male) -->
+                <div class="swiper-slide">
+                    <div
+                        class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 h-full">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="relative overflow-hidden rounded-lg aspect-video mb-6">
+                                <img src="{% static 'images/testimonials-6.jpg' %}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-left">
+                                    <h3 class="text-2xl font-bold text-white">James O'Neill</h3>
+                                    <p class="text-emerald-400 font-mono">Family Office Director</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                "Multi-generational wealth preservation tools that actually work. Our family's assets
+                                grew 34% net fees despite market volatility."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="swiper-button-next text-emerald-400 after:text-2xl"></div>
+            <div class="swiper-button-prev text-emerald-400 after:text-2xl"></div>
+
+            <!-- Pagination -->
+            <div class="swiper-pagination !bottom-0"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .swiper-pagination-bullet-active {
+        background-color: #3B82F6 !important;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        color: #3B82F6;
+        font-size: 1.5rem;
+    }
+
+    .swiper-slide {
+        height: auto;
+        padding: 1rem 0;
+    }
+</style>
+
+<section class="relative py-20 px-6 md:px-16 bg-gradient-to-b from-gray-900 to-[#0a101e]">
+    <div class="container mx-auto text-center max-w-7xl">
+        <!-- Team Section -->
+        <div class="mb-28">
+            <div class="inline-block relative">
+                <h2
+                    class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 mb-4">
+                    The Visionaries
+                </h2>
+                <div
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-emerald-400/50 to-cyan-500/50">
+                </div>
+            </div>
+            <p class="text-gray-300 mt-8 text-lg max-w-2xl mx-auto">
+                The brilliant minds orchestrating Nexa Wealth's financial revolution
+            </p>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Team Member 1 -->
+                <!-- Card 1 - Male -->
+                <div
+                    class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300">
+                    <div class="bg-gray-900 rounded-xl p-6">
+                        <div class="relative overflow-hidden rounded-lg aspect-square">
+                            <img src="{% static 'images/mastermind-1.jpg' %}" alt="Jonathan West"
+                                class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                            </div>
+                            <div class="absolute bottom-4 left-4 text-left">
+                                <h3 class="text-2xl font-bold text-white">Jonathan West</h3>
+                                <p class="text-emerald-400 font-mono">CFO</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mt-4 text-sm leading-relaxed">
+                            Veteran strategist with deep insights in corporate finance and tech innovation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 - Female -->
+                <div
+                    class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300">
+                    <div class="bg-gray-900 rounded-xl p-6">
+                        <div class="relative overflow-hidden rounded-lg aspect-square">
+                            <img src="{% static 'images/mastermind-2.jpg' %}" alt="Aisha Johnson"
+                                class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                            </div>
+                            <div class="absolute bottom-4 left-4 text-left">
+                                <h3 class="text-2xl font-bold text-white">Aisha Johnson</h3>
+                                <p class="text-emerald-400 font-mono">CEO</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mt-4 text-sm leading-relaxed">
+                            Visionary leader driving global impact through strategic innovation and people-first
+                            leadership.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 - Male -->
+                <div
+                    class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300">
+                    <div class="bg-gray-900 rounded-xl p-6">
+                        <div class="relative overflow-hidden rounded-lg aspect-square">
+                            <img src="{% static 'images/mastermind-3.jpg' %}" alt="James Rodriguez"
+                                class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent">
+                            </div>
+                            <div class="absolute bottom-4 left-4 text-left">
+                                <h3 class="text-2xl font-bold text-white">James Rodriguez</h3>
+                                <p class="text-emerald-400 font-mono">CTO</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mt-4 text-sm leading-relaxed">
+                            Tech innovator behind cutting-edge infrastructures and scalable systems powering tomorrow’s
+                            solutions.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Investors Section -->
+    <div class="pt-28 border-t border-gray-800/50">
+        <div class="inline-block relative">
+            <h2
+                class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500 mb-4">
+                Our Champions
+            </h2>
+            <div
+                class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-purple-400/50 to-indigo-500/50">
+            </div>
+        </div>
+        <p class="text-gray-300 mt-8 text-lg max-w-2xl mx-auto">
+            Visionary investors shaping the future of global finance
+        </p>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Investor 1 -->
+            <div
+                class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
+                    <img src="{% static 'images/investor-1.jpg'%}" alt="Mr. Cole"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-gray-900 via-gray-900/90 to-transparent">
+                        <h3 class="text-xl font-bold text-white">Mr. Cole</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <div class="text-left">
+                                <p class="text-sm text-purple-300">Total Commitment</p>
+                                <p class="text-2xl font-bold text-purple-400">$180K</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span
+                                    class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Fintech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
+                    <img src="{% static 'images/investor-2.jpg'%}" alt="Ms. Amelia"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-gray-900 via-gray-900/90 to-transparent">
+                        <h3 class="text-xl font-bold text-white">Ms. Denzel</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <div class="text-left">
+                                <p class="text-sm text-purple-300">Total Commitment</p>
+                                <p class="text-2xl font-bold text-purple-400">$210K</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span
+                                    class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Healthcare</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-2xl hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
+                    <img src="{% static 'images/investor-3.jpg'%}" alt="Mr. Denzel"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-gray-900 via-gray-900/90 to-transparent">
+                        <h3 class="text-xl font-bold text-white">Mrs. Amelia</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <div class="text-left">
+                                <p class="text-sm text-purple-300">Total Commitment</p>
+                                <p class="text-2xl font-bold text-purple-400">$265K</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span
+                                    class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Energy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-20 left-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl"></div>
+    </div>
+</section>
+
+<!-- Join Us Section -->
+<section class="relative py-16 md:py-24 px-6 text-center overflow-hidden bg-gradient-to-br from-[#141e30] to-[#243b55]">
+    <div class="absolute inset-0 overflow-hidden opacity-30">
+        <div style="background: linear-gradient(45deg, rgba(30, 58, 138, 0.5), rgba(126, 87, 194, 0.5));"
+            class="absolute top-1/4 left-1/4 w-32 h-32 rounded-full filter blur-xl animate-pulse slow-pulse"></div>
+        <div style="background: linear-gradient(135deg, rgba(0, 172, 193, 0.5), rgba(255, 193, 7, 0.5));"
+            class="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full filter blur-xl animate-float slow-float"></div>
+        <div style="background: linear-gradient(225deg, rgba(220, 38, 38, 0.5), rgba(52, 211, 3, 0.5));"
+            class="absolute top-1/3 right-1/3 w-24 h-24 rounded-full filter blur-xl animate-pulse pulse-delay-1"></div>
+        <div style="background: linear-gradient(315deg, rgba(236, 72, 153, 0.5), rgba(14, 165, 233, 0.5));"
+            class="absolute bottom-1/4 left-1/3 w-36 h-36 rounded-full filter blur-xl animate-float float-delay-2">
+        </div>
+    </div>
+
+    <div class="relative max-w-3xl mx-auto space-y-6">
+        <h1
+            class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 to-cyan-300 bg-clip-text text-transparent">
+            Join Us Today
+        </h1>
+        <p class="text-lg text-gray-300 leading-relaxed">
+            Open a free account (zero commission) and start earning passive income through this untapped opportunity.
+        </p>
+        <div class="pt-4">
+            <a href="{% url 'account_signup' %}"
+                class="inline-block px-8 py-3 rounded-full text-white font-medium bg-gradient-to-r from-blue-500 to-green-600 hover:from-green-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">
+                Sign Up Free
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 0.7;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+    }
+
+    .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .slow-pulse {
+        animation-duration: 3s;
+    }
+
+    .pulse-delay-1 {
+        animation-delay: 0.5s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    .animate-float {
+        animation: float 2.5s ease-in-out infinite;
+    }
+
+    .slow-float {
+        animation-duration: 4s;
+    }
+
+    .float-delay-2 {
+        animation-delay: 1s;
+    }
+</style>
+
+<!-- Payment Methods Section -->
+<section class="text-white py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center space-y-3">
+            <h2
+                class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 to-cyan-300 bg-clip-text text-transparent">
+                Accepted Payment Methods
+            </h2>
+            <p class="text-blue-300/80 text-sm md:text-base">
+                Below are the payment methods we currently accept. More options coming soon!
+            </p>
+        </div>
+
+        <!-- Payment Methods Grid -->
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <div
+                class="bg-[#10131E] rounded-xl p-6 flex items-center justify-center border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                <img src="{% static 'images/perfectmoney1.png' %}"
+                    class="h-12 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                    alt="Perfect Money">
+            </div>
+            <div
+                class="bg-[#10131E] rounded-xl p-6 flex items-center justify-center border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                <img src="{% static 'images/bit-coin.jpeg' %}"
+                    class="h-12 object-contain grayscale hover:grayscale-0 transition-all duration-300" alt="Bitcoin">
+            </div>
+            <div
+                class="bg-[#10131E] rounded-xl p-6 flex items-center justify-center border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                <img src="{% static 'images/eth.jpeg' %}"
+                    class="h-12 object-contain grayscale hover:grayscale-0 transition-all duration-300" alt="Ethereum">
+            </div>
+            <div
+                class="bg-[#10131E] rounded-xl p-6 flex items-center justify-center border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                <img src="{% static 'images/ddg.jpeg' %}"
+                    class="h-12 object-contain grayscale hover:grayscale-0 transition-all duration-300" alt="Dogecoin">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center space-y-8">
+        <div class="space-y-3">
+            <h2
+                class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 to-cyan-300 bg-clip-text text-transparent">
+                Stay Updated
+            </h2>
+            <p class="text-blue-300/80 text-sm md:text-base">
+                Join our newsletter and be the first to get daily updates on all offers!
+            </p>
+        </div>
+
+        <div class="relative max-w-md mx-auto">
+            <div
+                class="relative flex items-center bg-[#10131E] rounded-full border border-blue-900/50 focus-within:border-blue-500 transition-all duration-300 overflow-hidden">
+                <input type="email" placeholder="Enter your email"
+                    class="w-full px-6 py-3 bg-transparent text-white placeholder-blue-300/50 outline-none">
+                <button
+                    class="absolute right-1 top-1 bottom-1 px-6 rounded-full bg-gradient-to-r from-blue-500 to-green-600 text-white font-medium hover:from-green-600 hover:to-blue-700 transition-all duration-300 shadow-md">
+                    Subscribe
+                </button>
+            </div>
+            <p class="mt-3 text-xs text-blue-300/50">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

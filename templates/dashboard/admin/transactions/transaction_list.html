@@ -1,0 +1,71 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Transactions
+{% endblock title %}
+
+{% block page_title %}
+Transactions
+{% endblock page_title %}
+
+{% block content %}
+<div class="w-full overflow-x-auto">
+    <div class="min-w-[800px] space-y-2">
+        <!-- Header -->
+        <div class="grid grid-cols-6 md:grid-cols-6 bg-blue-700 text-white font-semibold py-3 px-4 rounded-t-lg">
+            <div class="text-center">User</div>
+            <div class="text-center">Type</div>
+            <div class="text-center">Amount</div>
+            <div class="text-center">Status</div>
+            <div class="text-center">Timestamp</div>
+            {% if user.is_staff %}
+            <div class="text-center">Action</div>
+            {% endif %}
+        </div>
+
+        <!-- Rows -->
+        {% for transaction in transactions %}
+        <div
+            class="grid grid-cols-6 md:grid-cols-6 bg-slate-800 hover:bg-slate-700 transition rounded px-4 py-3 text-sm items-center">
+            <div class="text-center text-white truncate"><a href="{% url 'admin:transaction-detail' transaction.id %}"
+                    class="hover:text-underline">
+                    {{ transaction.user.email }}</a></div>
+            <div class="text-center text-white">{{ transaction.get_transaction_type_display }}</div>
+            <div class="text-center text-green-400">₦{{ transaction.amount|floatformat:2|intcomma }}</div>
+            <div class="text-center">
+                {% if transaction.status == "PENDING" %}
+                <span class="bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-semibold">
+                    {{ transaction.get_status_display }}</span>
+                {% elif transaction.status == "APPROVED" %}
+                <span class="bg-green-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                    {{ transaction.get_status_display }}</span>
+                {% elif transaction.status == "REJECTED" %}
+                <span class="bg-red-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                    {{ transaction.get_status_display }}</span>
+                {% else %}
+                <span class="bg-gray-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                    {{ transaction.get_status_display }}</span>
+                {% endif %}
+            </div>
+            <div class="text-center text-white">{{ transaction.timestamp|date:"m/d/Y H:i" }}</div>
+            {% if user.is_staff %}
+            <div class="text-center">
+                {% if transaction.status == "PENDING" %}
+                <a href="{% url 'admin:transaction-action' transaction.id %}"
+                    class="bg-blue-600 text-white text-xs px-3 py-1 rounded hover:bg-blue-700 transition">
+                    Review
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div class="text-center p-4 text-slate-300 bg-slate-800 rounded">
+            No transactions found.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Plan - {{ plan.name }}
+{% endblock title %}
+
+{% block page_title %}
+Plan - {{ plan.name }}
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="bg-[#2C2C2C] w-full p-5 rounded-sm">
+    <div class="space-y-5">
+        <p class="flex justify-between">
+            <span class="text-gray-600">Crypto Type:</span>
+            <span class="font-medium">{{ deposit_method.get_crypto_type_display }}</span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Wallet Address:</span>
+            <span class="font-medium">{{ deposit_method.wallet_address }}</span>
+        </p>
+        {% if deposit_method.qr_code %}
+        <p class="flex justify-between">
+            <span class="text-gray-600">QR Code:</span>
+            <span class="font-medium">
+                <img src="{{ deposit_method.qr_code.url }}" alt="QR Code" class="w-20 h-20">
+            </span>
+        </p>
+        {% endif %}
+        <p class="flex justify-between">
+            <span class="text-gray-600">Active Status:</span>
+            <span class="font-medium">
+                {% if deposit_method.is_active %}
+                <span class="text-green-500">Active</span>
+                {% else %}
+                <span class="text-red-500">Inactive</span>
+                {% endif %}
+            </span>
+        </p>
+        <p class="flex justify-between">
+            <span class="text-gray-600">Instructions:</span>
+            <span class="font-medium">{{ deposit_method.instruction }}</span>
+        </p>
+
+        <!-- Edit & Delete Buttons -->
+        <div class="flex justify-end space-x-4 mt-5">
+            <a href="{% url 'admin:deposit-method-update' deposit_method.id %}"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Edit Deposit Method
+            </a>
+            <a href="{% url 'admin:deposit-method-delete' deposit_method.id %}"
+                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                Delete Deposit Method
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Transaction #{{ transaction.id }} Details
+{% endblock title %}
+
+{% block page_title %}
+Transaction Details <span class="text-gray-400">#{{ transaction.id }}</span>
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="bg-[#2C2C2C] w-full p-6 rounded-lg shadow-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Transaction Information -->
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold border-b border-gray-700 pb-2 text-blue-400">Transaction Information</h3>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Transaction ID:</span>
+                <span class="font-mono text-gray-200">{{ transaction.id }}</span>
+            </div>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">User:</span>
+                <span class="font-medium text-gray-200">{{ transaction.user }}</span>
+            </div>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Type:</span>
+                <span
+                    class="font-medium {% if transaction.transaction_type == 'DEPOSIT' %}text-green-400{% else %}text-yellow-400{% endif %}">
+                    {{ transaction.get_transaction_type_display }}
+                </span>
+            </div>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Amount:</span>
+                <span class="font-bold text-white">${{ transaction.amount|intcomma }}</span>
+            </div>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Status:</span>
+                <span class="font-medium
+                    {% if transaction.status == 'COMPLETED' %}text-green-400
+                    {% elif transaction.status == 'PENDING' %}text-yellow-400
+                    {% else %}text-red-400{% endif %}">
+                    {{ transaction.get_status_display }}
+                </span>
+            </div>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Timestamp:</span>
+                <span class="font-medium text-gray-300">{{ transaction.timestamp|date:"M d, Y H:i" }}</span>
+            </div>
+        </div>
+
+        <!-- Payment Details -->
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold border-b border-gray-700 pb-2 text-blue-400">Payment Details</h3>
+
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Wallet:</span>
+                <span class="font-mono text-gray-200 break-all">{{ transaction.wallet }}</span>
+            </div>
+
+            {% if transaction.transaction_type == 'DEPOSIT' %}
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Deposit Method:</span>
+                <span class="font-medium text-gray-200">{{ transaction.deposit_method }}</span>
+            </div>
+            {% else %}
+            <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Withdrawal Address:</span>
+                <span class="font-mono text-gray-200 break-all">{{ transaction.withdrawal_address }}</span>
+            </div>
+            {% endif %}
+
+            {% if transaction.admin_note %}
+            <div class="pt-2">
+                <h4 class="text-gray-400 mb-1">Admin Note:</h4>
+                <div class="bg-gray-800 p-3 rounded text-gray-300 text-sm">
+                    {{ transaction.admin_note }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap justify-end gap-3 mt-8 pt-5 border-t border-gray-700">
+        {% if user.is_staff and transaction.status == "PENDING" %}
+        <a href="{% url 'admin:transaction-action' transaction.id %}"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd" />
+            </svg>
+            Review Transaction
+        </a>
+        {% endif %}
+
+        <a href="{% url 'admin:transaction-delete' transaction.id %}"
+            class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    clip-rule="evenodd" />
+            </svg>
+            Delete Transaction
+        </a>
+
+        <a href="{% url 'admin:transaction-list' %}"
+            class="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2.5 rounded-md font-medium transition-colors">
+            Back to Transactions
+        </a>
+    </div>
+</div>
+
+{% endblock %}

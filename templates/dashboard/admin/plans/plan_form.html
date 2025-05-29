@@ -1,0 +1,43 @@
+{% extends '../shared/_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+{% if object %} Update Plan {% else %} Create Plan {% endif %}
+{% endblock title %}
+
+{% block page_title %}
+{% if object %} Update Plan {% else %} Create Plan {% endif %}
+{% endblock page_title %}
+
+{% block content %}
+<div class="w-full bg-white p-6 rounded-lg shadow-md text-black">
+    <h2 class="text-3xl font-semibold mb-4 text-primary">
+        {% if object %} Update Plan {% else %} Create Plan {% endif %}
+    </h2>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ field.errors|join:", " }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="mt-4">
+            <button type="submit" class="bg-primary text-white py-2 px-10 rounded-md hover:bg-blue-600">
+                {% if object %} Update Plan {% else %} Create Plan {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
