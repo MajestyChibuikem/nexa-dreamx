@@ -1,7 +1,8 @@
 {
-  "scripts": {
+   "scripts": {
     "build:css": "npx tailwindcss -i ./static/css/input.css -o ./static/css/styles.css --watch",
-    "dev": "concurrently \"venv\\Scripts\\activate && python manage.py runserver 4400\" \"npm run build:css\""
+    "build:css:prod": "npx tailwindcss -i ./static/css/input.css -o ./static/css/styles.css --minify",
+    "dev": "concurrently \"source venv/bin/activate && python manage.py runserver\" \"npm run build:css\""
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

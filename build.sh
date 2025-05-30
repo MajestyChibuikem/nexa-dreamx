@@ -1,10 +1,16 @@
-set -o errexit
+#!/bin/bash
 
-# Modify this line as needed for your package manager (pip, poetry, etc.)
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Convert static asset files
-python manage.py collectstatic --no-input
+# Install Node.js dependencies
+npm install
 
-# Apply any outstanding database migrations
+# Build Tailwind CSS
+npm run build:css:prod
+
+# Collect static files
+python manage.py collectstatic --noinput
+
+# Run database migrations
 python manage.py migrate
