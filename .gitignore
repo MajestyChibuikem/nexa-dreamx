@@ -6,3 +6,4 @@ pychache
 __pychache__/
 staticfiles
 media/
+.env2
