@@ -1,64 +1,155 @@
 {% extends './shared/_base.html' %}
 {% load static %}
-{% load humanize %}
 
-{% block title %}Withdrawal Methods{% endblock %}
-{% block page_title %}Withdrawal Methods{% endblock %}
+{% block title %}Crypto Withdrawal{% endblock %}
+{% block page_title %}Crypto Withdrawal{% endblock %}
+
+{% block extra_head %}
+<style>
+    .crypto-card {
+        background: linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%);
+    }
+    .withdrawal-form {
+        background: linear-gradient(135deg, #1A1A1A 0%, #252525 100%);
+    }
+    .input-field {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(10px);
+    }
+    .input-field:focus {
+        border-color: rgba(59, 130, 246, 0.8);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .withdraw-button {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+    .withdraw-button:hover {
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        transform: translateY(-2px);
+    }
+    .balance-card {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+    .address-input {
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+    .fee-calculator {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
-    {% for crypto in cryptos %}
-    <div
-        class="group relative bg-gradient-to-br from-[#1E1E1E] to-[#2A2A2A] rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 border border-blue-500/20 hover:border-blue-500/40">
-        <div class="flex flex-col md:flex-row items-center gap-6">
-            <!-- Crypto Image -->
-            <div class="w-32 h-32 rounded-xl bg-white/5 p-4 flex items-center justify-center backdrop-blur-sm">
-                {% if crypto.crypto_type == 'BTC' %}
-                <img src="{% static 'images/bitcoin.png' %}" alt="Bitcoin" class="w-20 h-20 object-contain">
-                {% elif crypto.crypto_type == 'ETH' %}
-                <img src="{% static 'images/etherum.png' %}" alt="Ethereum" class="w-20 h-20 object-contain">
-                {% elif crypto.crypto_type == 'USDT' %}
-                <img src="{% static 'images/usdt.png' %}" alt="USDT" class="w-20 h-20 object-contain">
-                {% elif crypto.crypto_type == 'DOD' %}
-                <img src="{% static 'images/dodge.png' %}" alt="Dogecoin" class="w-20 h-20 object-contain">
-                {% elif crypto.crypto_type == 'LTC' %}
-                <img src="{% static 'images/litecoin.png' %}" alt="Litecoin" class="w-20 h-20 object-contain">
-                {% endif %}
-            </div>
+<div class="container mx-auto px-4 py-8 max-w-4xl">
 
-            <!-- Details -->
-            <div class="flex-1 space-y-4">
-                <h3 class="text-xl font-bold text-center md:text-left text-blue-400">
-                    {{ crypto.get_crypto_type_display }}
-                </h3>
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-red-400 mb-2">Crypto Withdrawal</h1>
+        <p class="text-gray-400">Withdraw your funds to your external wallet</p>
+    </div>
 
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400">Limit:</span>
-                        <span class="font-mono text-blue-300">
-                            $100 - ${{1000000|intcomma}}
-                        </span>
-                    </div>
-
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-400">Fees:</span>
-                        <span class="font-mono text-red-400">
-                            0% + $0
-                        </span>
-                    </div>
+    <!-- Balance Card -->
+    <div class="balance-card rounded-2xl p-6 mb-8 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-2">Available Balance</h3>
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl font-bold text-white">${{ balance_usd }}</span>
+                    <span class="text-sm text-green-200 bg-green-600/20 px-3 py-1 rounded-full">≈ {{ balance_crypto }} BTC</span>
                 </div>
-
-                <a href="{% url 'user:withdrawal_create' crypto.id %}"
-                    class="block w-full py-3 text-center font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-300 transform group-hover:-translate-y-1">
-                    Withdraw Now
-                    <svg class="w-4 h-4 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                    </svg>
-                </a>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-green-100">Last updated: {{ last_updated }}</p>
+                <a href="{% url 'refresh_balance' %}" class="text-sm text-green-200 hover:text-white transition-colors duration-300 underline mt-1">Refresh Balance</a>
             </div>
         </div>
     </div>
-    {% endfor %}
+
+    <!-- Withdrawal Form -->
+    <div class="withdrawal-form rounded-2xl p-8 shadow-2xl border border-blue-500/20">
+        <form method="POST" id="withdrawalForm" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Selected Cryptocurrency -->
+            <div class="crypto-card rounded-xl p-6 border border-blue-500/30">
+                <h3 class="text-lg font-semibold text-blue-400 mb-4">Withdrawal Currency</h3>
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-white/10 p-2 flex items-center justify-center">
+                        <img src="{% static 'icons/btc.svg' %}" alt="BTC" class="w-10 h-10">
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-white">{{ crypto_name }}</h4>
+                        <p class="text-sm text-gray-400">{{ crypto_network }}</p>
+                        <p class="text-sm text-green-400 font-mono">Balance: {{ balance_crypto }} BTC</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Withdrawal Amount -->
+            <div class="crypto-card rounded-xl p-6 border border-blue-500/30">
+                <h3 class="text-lg font-semibold text-blue-400 mb-4">Withdrawal Amount</h3>
+                <div class="space-y-4">
+                    <input type="number" name="amount" placeholder="Enter amount" min="100" required
+                           class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>Min: $100</span>
+                        <span>Max: ${{ balance_usd }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destination Wallet Address -->
+            <div class="crypto-card rounded-xl p-6 border border-blue-500/30">
+                <h3 class="text-lg font-semibold text-blue-400 mb-4">Destination Wallet</h3>
+                <label for="wallet" class="block mb-2 text-sm font-medium text-gray-300">Wallet Address</label>
+                <input type="text" name="wallet" placeholder="Enter destination address" required
+                       class="address-input input-field w-full px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none">
+                <label for="network" class="block mt-6 mb-2 text-sm font-medium text-gray-300">Network</label>
+                <select name="network" required class="input-field w-full px-4 py-3 rounded-lg text-white">
+                    <option value="btc">Bitcoin</option>
+                    <option value="eth">Ethereum (ERC20)</option>
+                    <option value="trc20">TRON (TRC20)</option>
+                    <option value="bsc">BSC (BEP20)</option>
+                </select>
+            </div>
+
+            <!-- Two-Factor & Password -->
+            <div class="crypto-card rounded-xl p-6 border border-amber-500/30">
+                <h3 class="text-lg font-semibold text-amber-400 mb-4">Security Verification</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm mb-2">2FA Code</label>
+                        <input type="text" name="otp" maxlength="6" required
+                               class="input-field w-full px-4 py-3 rounded-lg text-white text-center font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2">Account Password</label>
+                        <input type="password" name="password" required
+                               class="input-field w-full px-4 py-3 rounded-lg text-white">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="flex items-start space-x-3 mt-4">
+                <input type="checkbox" id="confirmationCheck" name="confirmation" required
+                       class="mt-1 w-5 h-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
+                <label for="confirmationCheck" class="text-sm text-gray-300 leading-relaxed">
+                    I confirm the wallet address is correct and I understand that crypto withdrawals are irreversible.
+                </label>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex justify-end pt-6">
+                <button type="submit"
+                        class="withdraw-button py-3 px-6 rounded-lg text-white font-semibold transition-transform transform hover:scale-105">
+                    Process Withdrawal
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}
