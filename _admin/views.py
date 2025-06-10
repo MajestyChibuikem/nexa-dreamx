@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -24,6 +24,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils import timezone
+from decimal import Decimal, InvalidOperation
 
 
 template_url = "dashboard/admin"
@@ -143,11 +144,32 @@ class WalletCreateView(CreateView):
     success_url = reverse_lazy("wallet-list")
 
 
-class WalletUpdateView(UpdateView):
+class WalletUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     model = Wallet
     template_name = f"{template_url}/wallet/wallet_form.html"
-    fields = "__all__"
-    success_url = reverse_lazy("wallet-list")
+    fields = ['balance']  # Only allow balance to be updated
+    success_url = reverse_lazy("admin:wallet-list")
+
+    def post(self, request, *args, **kwargs):
+        # Get the wallet instance
+        self.object = self.get_object()
+        
+        # Get the new balance from POST data
+        new_balance = request.POST.get('balance')
+        
+        try:
+            # Convert to decimal and update
+            new_balance = Decimal(new_balance)
+            self.object.balance = new_balance
+            self.object.save()
+            
+            # Add success message
+            messages.success(request, f"Wallet balance updated successfully to ${new_balance:.2f}")
+            return redirect(self.get_success_url())
+            
+        except (InvalidOperation, ValueError) as e:
+            messages.error(request, "Invalid balance amount")
+            return self.form_invalid(None)
 
 
 class WalletDeleteView(DeleteView):
