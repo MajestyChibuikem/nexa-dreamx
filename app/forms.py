@@ -3,6 +3,9 @@ from allauth.account.forms import SignupForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from users.models import Referral
+from django.core.validators import MinValueValidator
+from django.contrib.auth import authenticate
+from .models import Wallet
 
 User = get_user_model()
 
@@ -76,3 +79,52 @@ class CustomSignupForm(SignupForm):
             user.save(update_fields=["first_name", "last_name", "mobile", "username"])
 
         return user
+
+
+class WithdrawalForm(forms.Form):
+    crypto_type = forms.ChoiceField(
+        choices=[('BTC', 'Bitcoin'), ('ETH', 'Ethereum'), ('USDT', 'Tether')],
+        widget=forms.HiddenInput()
+    )
+    amount = forms.DecimalField(
+        max_digits=20,
+        decimal_places=2,
+        validators=[MinValueValidator(10.00)]  # Minimum withdrawal
+    )
+    destination_address = forms.CharField(max_length=255)
+    network = forms.ChoiceField(
+        choices=[('MAINNET', 'Main Network'), ('TESTNET', 'Test Network')]
+    )
+    address_label = forms.CharField(required=False, max_length=100)
+    priority = forms.ChoiceField(
+        choices=[('LOW', 'Low'), ('MEDIUM', 'Medium'), ('HIGH', 'High')]
+    )
+    two_factor_code = forms.CharField(max_length=6, min_length=6)
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirmation = forms.BooleanField(required=True)
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # Verify password
+        password = cleaned_data.get('password')
+        if not authenticate(username=self.user.username, password=password):
+            raise forms.ValidationError("Incorrect password")
+            
+        # Check available balance
+        amount = cleaned_data.get('amount')
+        if amount:
+            try:
+                wallet = Wallet.objects.get(user=self.user, wallet_type="INTEREST")
+                if not wallet.can_withdraw(amount):
+                    raise forms.ValidationError(
+                        f"Insufficient available balance. You have ${wallet.available_balance} available."
+                    )
+            except Wallet.DoesNotExist:
+                raise forms.ValidationError("Wallet not found")
+                
+        return cleaned_data
