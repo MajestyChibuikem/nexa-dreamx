@@ -55,7 +55,18 @@ class WithdrawalView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
+        
+        # Get the interest wallet
+        try:
+            interest_wallet = Wallet.objects.get(user=user, wallet_type="INTEREST")
+            pending_balance = interest_wallet.balance - interest_wallet.available_balance
+        except Wallet.DoesNotExist:
+            interest_wallet = None
+            pending_balance = Decimal('0.00')
+        
         context.update({
+            'interest_wallet': interest_wallet,
+            'pending_balance': pending_balance,
             'available_cryptos': self.get_available_cryptos(user),
             'min_withdrawal_amount': Decimal('10.00'),  # Set your minimum
             'network_fee': Decimal('0.0005'),  # Example fee
@@ -108,14 +119,31 @@ class WithdrawalView(LoginRequiredMixin, FormView):
     
     def get_available_cryptos(self, user):
         """Returns available crypto balances for the user"""
-        interest_wallet = Wallet.objects.get(user=user, wallet_type="INTEREST")
-        return [
-            {
-                'symbol': 'BTC',
-                'name': 'Bitcoin',
-                'balance': interest_wallet.balance / Decimal('50000'),  # Example conversion
-                'usd_value': interest_wallet.balance,
-                'network': 'Bitcoin Network'
-            },
-            # Add other cryptocurrencies...
-        ]
+        try:
+            interest_wallet = Wallet.objects.get(user=user, wallet_type="INTEREST")
+            return [
+                {
+                    'symbol': 'BTC',
+                    'name': 'Bitcoin',
+                    'balance': interest_wallet.balance / Decimal('50000'),  # Example conversion
+                    'usd_value': interest_wallet.balance,
+                    'network': 'Bitcoin Network'
+                },
+                {
+                    'symbol': 'ETH',
+                    'name': 'Ethereum',
+                    'balance': interest_wallet.balance / Decimal('3000'),  # Example conversion
+                    'usd_value': interest_wallet.balance,
+                    'network': 'Ethereum Network'
+                },
+                {
+                    'symbol': 'USDT',
+                    'name': 'Tether USD',
+                    'balance': interest_wallet.balance,  # 1:1 conversion
+                    'usd_value': interest_wallet.balance,
+                    'network': 'Ethereum Network (ERC-20)'
+                },
+                # Add other cryptocurrencies...
+            ]
+        except Wallet.DoesNotExist:
+            return []
