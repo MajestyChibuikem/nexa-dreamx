@@ -20,6 +20,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+from decimal import Decimal
+from django.db import transaction
+from django.contrib import messages
 
 
 logging.basicConfig(
@@ -281,13 +284,141 @@ class DepositCreateView(LoginRequiredMixin, FormView):
         return reverse("user:deposit_details", kwargs={"pk": self.transaction_pk})
 
 
-class WithdrawalMethodListView(LoginRequiredMixin, ListView):
-    model = DepositMethod
+class WithdrawalMethodListView(LoginRequiredMixin, FormView):
+    form_class = WithdrawalForm
     template_name = f"{template_dir}/withdrawals_methods.html"
-    context_object_name = "cryptos"
 
-    def get_queryset(self):
-        return DepositMethod.objects.filter(is_active=True).exclude(crypto_type="BANK")
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        
+        # Get the interest wallet
+        try:
+            interest_wallet = Wallet.objects.get(user=user, wallet_type="INTEREST")
+            pending_balance = interest_wallet.balance - interest_wallet.available_balance
+        except Wallet.DoesNotExist:
+            interest_wallet = None
+            pending_balance = Decimal('0.00')
+        
+        # Get available crypto methods
+        available_cryptos = []
+        crypto_methods = DepositMethod.objects.filter(is_active=True).exclude(crypto_type="BANK")
+        
+        for method in crypto_methods:
+            if interest_wallet:
+                # Calculate crypto balance based on USD value
+                usd_balance = interest_wallet.available_balance
+                if method.crypto_type == "BTC":
+                    crypto_balance = usd_balance / Decimal('50000')  # Example BTC price
+                elif method.crypto_type == "ETH":
+                    crypto_balance = usd_balance / Decimal('3000')   # Example ETH price
+                elif method.crypto_type == "USDT":
+                    crypto_balance = usd_balance  # 1:1 conversion
+                else:
+                    crypto_balance = usd_balance
+                
+                available_cryptos.append({
+                    'symbol': method.crypto_type,
+                    'name': method.get_crypto_type_display(),
+                    'balance': crypto_balance,
+                    'usd_value': usd_balance,
+                    'network': f"{method.get_crypto_type_display()} Network"
+                })
+        
+        context.update({
+            'interest_wallet': interest_wallet,
+            'pending_balance': pending_balance,
+            'available_cryptos': available_cryptos,
+            'min_withdrawal_amount': Decimal('10.00'),
+            'network_fee': Decimal('0.0005'),
+            'processing_fee': Decimal('1.00'),
+        })
+        return context
+
+    def form_valid(self, form):
+        try:
+            with transaction.atomic():
+                user = self.request.user
+                amount = form.cleaned_data['amount']
+                crypto_type = form.cleaned_data['crypto_type']
+                wallet_address = form.cleaned_data['destination_address']
+                
+                # Get the appropriate wallet (INTEREST wallet for withdrawals)
+                wallet = Wallet.objects.get(user=user, wallet_type="INTEREST")
+                
+                if not wallet.can_withdraw(amount):
+                    messages.error(self.request, "Insufficient available balance")
+                    return self.form_invalid(form)
+                
+                # Get the deposit method for the selected crypto
+                try:
+                    deposit_method = DepositMethod.objects.get(crypto_type=crypto_type, is_active=True)
+                except DepositMethod.DoesNotExist:
+                    messages.error(self.request, "Selected cryptocurrency method not found")
+                    return self.form_invalid(form)
+                
+                # Create the withdrawal transaction
+                withdrawal = Transaction.objects.create(
+                    user=user,
+                    wallet=wallet,
+                    amount=amount,
+                    transaction_type="WITHDRAW",
+                    withdrawal_address=wallet_address,
+                    deposit_method=deposit_method,
+                    status="PENDING",
+                    admin_note=f"Pending {crypto_type} withdrawal to {wallet_address}"
+                )
+                
+                messages.success(
+                    self.request,
+                    f"Withdrawal request for ${amount} submitted successfully. "
+                    "It will be processed shortly."
+                )
+                
+                # Send email notifications
+                context = {
+                    "user": user,
+                    "amount": amount,
+                    "wallet_address": wallet_address,
+                    "crypto_method": deposit_method,
+                    "transaction": withdrawal,
+                    "site_name": "Your Investment Platform",
+                }
+
+                send_transaction_email(
+                    "withdrawal_pending.html",
+                    f"Withdrawal Request Received - #{withdrawal.id}",
+                    context,
+                    user.email,
+                )
+
+                admin_context = {
+                    "user": user,
+                    "transaction": withdrawal,
+                    "amount": amount,
+                    "type": "Withdrawal",
+                }
+
+                send_transaction_email(
+                    "admin_notification.html",
+                    f"New Withdrawal Request - #{withdrawal.id}",
+                    admin_context,
+                    settings.ADMIN_EMAIL,
+                )
+                
+        except Exception as e:
+            messages.error(self.request, f"Withdrawal failed: {str(e)}")
+            return self.form_invalid(form)
+            
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("user:withdrawals")
 
 
 class WithdrawalCreateView(LoginRequiredMixin, FormView):

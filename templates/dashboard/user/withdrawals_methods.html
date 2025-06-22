@@ -100,6 +100,18 @@
         background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
     }
 </style>
+
+<!-- Hidden data for JavaScript -->
+<script id="availableCryptosData" type="application/json">
+    {{ available_cryptos|safe }}
+</script>
+<script id="minWithdrawalAmount" type="application/json">{{ min_withdrawal_amount }}</script>
+<script id="networkFee" type="application/json">{{ network_fee }}</script>
+<script id="processingFee" type="application/json">{{ processing_fee }}</script>
+<script id="userBalance" type="application/json">
+    {% if interest_wallet %}{{ interest_wallet.available_balance }}{% else %}0.00{% endif %}
+</script>
+
 <script src="{% static 'js/withdraw.js' %}"></script>
 {% endblock %}
 
@@ -137,6 +149,9 @@
         <div class="withdrawal-form rounded-2xl p-8 shadow-2xl border border-blue-500/20">
             <form method="post" id="withdrawalForm" class="space-y-6">
                 {% csrf_token %}
+                
+                <!-- Hidden crypto type field -->
+                {{ form.crypto_type }}
                 
                 <!-- Cryptocurrency Selection -->
                 <div class="crypto-card rounded-xl p-6 border border-blue-500/30">
@@ -188,7 +203,7 @@
                             {% endif %}
                             <div class="flex justify-between text-sm text-gray-400">
                                 <span id="minAmount">Min: ${{ min_withdrawal_amount }}</span>
-                                <span id="maxAmount">Max: ${{ user.account.total_balance|floatformat:2 }}</span>
+                                <span id="maxAmount">Max: ${% if interest_wallet %}{{ interest_wallet.available_balance|floatformat:2 }}{% else %}0.00{% endif %}</span>
                             </div>
                             <div class="flex gap-2">
                                 <button type="button" class="quick-amount-btn flex-1 py-2 px-3 bg-gray-700 hover:bg-gray-600 rounded text-sm transition-colors duration-300" data-percent="25">25%</button>

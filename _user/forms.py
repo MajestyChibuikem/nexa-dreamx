@@ -70,16 +70,93 @@ class DepositForm(forms.Form):
 
 
 class WithdrawalForm(forms.Form):
-    amount = forms.DecimalField(max_digits=15, decimal_places=2)
-    wallet_address = forms.CharField(max_length=255)
+    crypto_type = forms.ChoiceField(
+        choices=[('BTC', 'Bitcoin'), ('ETH', 'Ethereum'), ('USDT', 'Tether')],
+        widget=forms.HiddenInput()
+    )
+    amount = forms.DecimalField(
+        max_digits=20,
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full pl-4 pr-16 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'placeholder': '0.00'
+        })
+    )
+    destination_address = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full pl-4 pr-12 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300 address-input',
+            'placeholder': 'Enter wallet address'
+        })
+    )
+    network = forms.ChoiceField(
+        choices=[('MAINNET', 'Main Network'), ('TESTNET', 'Test Network')],
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300'
+        })
+    )
+    address_label = forms.CharField(
+        required=False, 
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'placeholder': 'Optional label for your reference'
+        })
+    )
+    priority = forms.ChoiceField(
+        choices=[('LOW', 'Low'), ('MEDIUM', 'Medium'), ('HIGH', 'High')],
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300'
+        })
+    )
+    two_factor_code = forms.CharField(
+        max_length=6, 
+        min_length=6,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'placeholder': '6-digit 2FA code'
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'placeholder': 'Your account password'
+        })
+    )
+    confirmation = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2'
+        })
+    )
 
     def __init__(self, user=None, **kwargs):
+        self.user = kwargs.pop('user', None)
         super().__init__(**kwargs)
-        self.user = user
 
-    def clean_amount(self):
-        amount = self.cleaned_data["amount"]
-        interest_wallet = Wallet.objects.get(user=self.user, wallet_type="INTEREST")
-        if amount > interest_wallet.balance:
-            raise ValidationError("Insufficient balance in interest wallet")
-        return amount
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        if not self.user:
+            raise ValidationError("User not found")
+            
+        # Verify password
+        password = cleaned_data.get('password')
+        if password:
+            from django.contrib.auth import authenticate
+            if not authenticate(username=self.user.username, password=password):
+                raise ValidationError("Incorrect password")
+            
+        # Check available balance
+        amount = cleaned_data.get('amount')
+        if amount:
+            try:
+                wallet = Wallet.objects.get(user=self.user, wallet_type="INTEREST")
+                if not wallet.can_withdraw(amount):
+                    raise ValidationError(
+                        f"Insufficient available balance. You have ${wallet.available_balance} available."
+                    )
+            except Wallet.DoesNotExist:
+                raise ValidationError("Wallet not found")
+                
+        return cleaned_data
