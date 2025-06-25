@@ -195,7 +195,7 @@
                                 <button type="button" class="amount-type-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600" data-type="crypto">Crypto</button>
                             </div>
                             <div class="relative">
-                                {{ form.amount|add_class:'form-input' }}
+                                {{ form.amount }}
                                 <span id="amountSuffix" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-semibold">USD</span>
                             </div>
                             {% if form.amount.errors %}
@@ -233,7 +233,7 @@
                                     Destination Wallet Address <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
-                                    {{ form.destination_address|add_class:'form-input' }}
+                                    {{ form.destination_address }}
                                     <button type="button" id="pasteAddressBtn" 
                                             class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-blue-400 hover:text-blue-300 transition-all duration-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">Network</label>
-                                {{ form.network|add_class:'form-select' }}
+                                {{ form.network }}
                                 {% if form.network.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.network.errors %}
@@ -267,7 +267,7 @@
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
                                     Address Label (Optional)
                                 </label>
-                                {{ form.address_label|add_class:'form-input' }}
+                                {{ form.address_label }}
                                 {% if form.address_label.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.address_label.errors %}
@@ -312,7 +312,7 @@
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
                                     Transaction Priority
                                 </label>
-                                {{ form.priority|add_class:'form-select' }}
+                                {{ form.priority }}
                                 {% if form.priority.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.priority.errors %}
@@ -338,7 +338,7 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 2FA Code <span class="text-red-400">*</span>
                             </label>
-                            {{ form.two_factor_code|add_class:'form-input' }}
+                            {{ form.two_factor_code }}
                             {% if form.two_factor_code.errors %}
                                 <div class="text-red-400 text-sm mt-1">
                                     {% for error in form.two_factor_code.errors %}
@@ -351,7 +351,7 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Account Password <span class="text-red-400">*</span>
                             </label>
-                            {{ form.password|add_class:'form-input' }}
+                            {{ form.password }}
                             {% if form.password.errors %}
                                 <div class="text-red-400 text-sm mt-1">
                                     {% for error in form.password.errors %}
