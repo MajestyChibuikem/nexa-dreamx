@@ -78,48 +78,48 @@ class WithdrawalForm(forms.Form):
         max_digits=20,
         decimal_places=2,
         widget=forms.NumberInput(attrs={
-            'class': 'w-full pl-4 pr-16 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'class': 'w-full pl-4 pr-16 py-3 form-input rounded-lg text-white focus:outline-none transition-all duration-300',
             'placeholder': '0.00'
         })
     )
     destination_address = forms.CharField(
         max_length=255,
         widget=forms.TextInput(attrs={
-            'class': 'w-full pl-4 pr-12 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300 address-input',
+            'class': 'w-full pl-4 pr-12 py-3 form-input rounded-lg text-white focus:outline-none transition-all duration-300 address-input',
             'placeholder': 'Enter wallet address'
         })
     )
     network = forms.ChoiceField(
         choices=[('MAINNET', 'Main Network'), ('TESTNET', 'Test Network')],
         widget=forms.Select(attrs={
-            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300'
+            'class': 'w-full px-4 py-3 form-select rounded-lg text-white focus:outline-none transition-all duration-300'
         })
     )
     address_label = forms.CharField(
         required=False, 
         max_length=100,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'class': 'w-full px-4 py-3 form-input rounded-lg text-white focus:outline-none transition-all duration-300',
             'placeholder': 'Optional label for your reference'
         })
     )
     priority = forms.ChoiceField(
         choices=[('LOW', 'Low'), ('MEDIUM', 'Medium'), ('HIGH', 'High')],
         widget=forms.Select(attrs={
-            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300'
+            'class': 'w-full px-4 py-3 form-select rounded-lg text-white focus:outline-none transition-all duration-300'
         })
     )
     two_factor_code = forms.CharField(
         max_length=6, 
         min_length=6,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'class': 'w-full px-4 py-3 form-input rounded-lg text-white focus:outline-none transition-all duration-300',
             'placeholder': '6-digit 2FA code'
         })
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-3 input-field rounded-lg text-white focus:outline-none transition-all duration-300',
+            'class': 'w-full px-4 py-3 form-input rounded-lg text-white focus:outline-none transition-all duration-300',
             'placeholder': 'Your account password'
         })
     )

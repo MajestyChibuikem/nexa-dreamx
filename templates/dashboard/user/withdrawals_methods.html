@@ -20,11 +20,17 @@
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(59, 130, 246, 0.3);
         backdrop-filter: blur(10px);
+        color: white !important;
     }
     
     .input-field:focus {
         border-color: rgba(59, 130, 246, 0.8);
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        color: white !important;
+    }
+    
+    .input-field::placeholder {
+        color: rgba(156, 163, 175, 0.7) !important;
     }
     
     .withdraw-button {
@@ -98,6 +104,42 @@
     
     .crypto-icon.usd {
         background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+    }
+    
+    /* Form field styling */
+    .form-input {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(59, 130, 246, 0.3) !important;
+        color: white !important;
+        backdrop-filter: blur(10px);
+    }
+    
+    .form-input:focus {
+        border-color: rgba(59, 130, 246, 0.8) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        color: white !important;
+    }
+    
+    .form-input::placeholder {
+        color: rgba(156, 163, 175, 0.7) !important;
+    }
+    
+    .form-select {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(59, 130, 246, 0.3) !important;
+        color: white !important;
+        backdrop-filter: blur(10px);
+    }
+    
+    .form-select:focus {
+        border-color: rgba(59, 130, 246, 0.8) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        color: white !important;
+    }
+    
+    .form-select option {
+        background: #1E1E1E !important;
+        color: white !important;
     }
 </style>
 
