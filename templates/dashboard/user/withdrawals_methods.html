@@ -15,21 +15,24 @@
         background: linear-gradient(135deg, #1A1A1A 0%, #252525 100%);
     }
     
-    .form-input {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(59, 130, 246, 0.3) !important;
-        color: white !important;
-        backdrop-filter: blur(10px);
+    .form-input, .input-field {
+        background: #181f2a !important;
+        color: #fff !important;
+        border: 1px solid #334155 !important;
+        font-size: 1rem;
+        transition: border 0.2s, box-shadow 0.2s;
     }
     
-    .form-input:focus {
-        border-color: rgba(59, 130, 246, 0.8) !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-        color: white !important;
+    .form-input:focus, .input-field:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 2px #3b82f6 !important;
+        background: #23272f !important;
+        color: #fff !important;
     }
     
-    .form-input::placeholder {
-        color: rgba(156, 163, 175, 0.7) !important;
+    .form-input::placeholder, .input-field::placeholder {
+        color: #a0aec0 !important;
+        opacity: 1;
     }
     
     .form-select {
@@ -192,7 +195,7 @@
                                 <button type="button" class="amount-type-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600" data-type="crypto">Crypto</button>
                             </div>
                             <div class="relative">
-                                {{ form.amount }}
+                                {{ form.amount|add_class:'form-input' }}
                                 <span id="amountSuffix" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-semibold">USD</span>
                             </div>
                             {% if form.amount.errors %}
@@ -230,7 +233,7 @@
                                     Destination Wallet Address <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
-                                    {{ form.destination_address }}
+                                    {{ form.destination_address|add_class:'form-input' }}
                                     <button type="button" id="pasteAddressBtn" 
                                             class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-blue-400 hover:text-blue-300 transition-all duration-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,7 +253,7 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">Network</label>
-                                {{ form.network }}
+                                {{ form.network|add_class:'form-select' }}
                                 {% if form.network.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.network.errors %}
@@ -264,7 +267,7 @@
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
                                     Address Label (Optional)
                                 </label>
-                                {{ form.address_label }}
+                                {{ form.address_label|add_class:'form-input' }}
                                 {% if form.address_label.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.address_label.errors %}
@@ -309,7 +312,7 @@
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
                                     Transaction Priority
                                 </label>
-                                {{ form.priority }}
+                                {{ form.priority|add_class:'form-select' }}
                                 {% if form.priority.errors %}
                                     <div class="text-red-400 text-sm mt-1">
                                         {% for error in form.priority.errors %}
@@ -335,7 +338,7 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 2FA Code <span class="text-red-400">*</span>
                             </label>
-                            {{ form.two_factor_code }}
+                            {{ form.two_factor_code|add_class:'form-input' }}
                             {% if form.two_factor_code.errors %}
                                 <div class="text-red-400 text-sm mt-1">
                                     {% for error in form.two_factor_code.errors %}
@@ -348,7 +351,7 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Account Password <span class="text-red-400">*</span>
                             </label>
-                            {{ form.password }}
+                            {{ form.password|add_class:'form-input' }}
                             {% if form.password.errors %}
                                 <div class="text-red-400 text-sm mt-1">
                                     {% for error in form.password.errors %}
