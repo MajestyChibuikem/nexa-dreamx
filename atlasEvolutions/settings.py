@@ -18,9 +18,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = get_env_variable("SECRET_KEY", "fallback-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".vercel.app",  # Allows all Vercel subdomains
+]
+
+# Add custom domain if configured
+CUSTOM_DOMAIN = os.environ.get("CUSTOM_DOMAIN")
+if CUSTOM_DOMAIN:
+    ALLOWED_HOSTS.append(CUSTOM_DOMAIN)
+
+# CSRF trusted origins for Vercel
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+]
+if CUSTOM_DOMAIN:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{CUSTOM_DOMAIN}")
 
 
 # Application definition
@@ -103,26 +119,31 @@ WSGI_APPLICATION = "atlasEvolutions.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": get_env_variable("MYSQL_NAME", "mydatabase"),
-        "USER": get_env_variable("MYSQL_USER", "myuser"),
-        "PASSWORD": get_env_variable("MYSQL_PASSWORD", "mypassword"),
-        "HOST": get_env_variable("MYSQL_HOST", "localhost"),
-        "PORT": get_env_variable("MYSQL_PORT", "5432"),
-    }
-}
+# Vercel Postgres - uses POSTGRES_URL environment variable
+POSTGRES_URL = os.environ.get("POSTGRES_URL")
 
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=get_env_variable(
-#             "EXTERNAL_DB_URL", "postgres://user:password@localhost:5432/mydatabase"
-#         ),
-#         conn_max_age=600,
-#         ssl_require=True,
-#     )
-# }
+if POSTGRES_URL:
+    # Vercel Postgres deployment
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=POSTGRES_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        )
+    }
+else:
+    # Local development fallback
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": get_env_variable("DB_NAME", "mydatabase"),
+            "USER": get_env_variable("DB_USER", "myuser"),
+            "PASSWORD": get_env_variable("DB_PASSWORD", "mypassword"),
+            "HOST": get_env_variable("DB_HOST", "localhost"),
+            "PORT": get_env_variable("DB_PORT", "5432"),
+        }
+    }
 
 
 # Password validation
