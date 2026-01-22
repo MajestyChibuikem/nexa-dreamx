@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "python manage.py migrate --noinput && gunicorn atlasEvolutions.wsgi --bind 0.0.0.0:$PORT"
+cmd = "echo 'Running migrations...' && python manage.py migrate --noinput && echo 'Migrations complete. Starting server...' && gunicorn atlasEvolutions.wsgi --bind 0.0.0.0:$PORT --log-level info"
