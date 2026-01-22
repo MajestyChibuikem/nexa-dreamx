@@ -19,5 +19,12 @@
       "src": "/(.*)",
       "dest": "atlasEvolutions/wsgi.py"
     }
-  ]
+  ],
+  "outputDirectory": ".",
+  "installCommand": "pip install -r requirements.txt",
+  "functions": {
+    "atlasEvolutions/wsgi.py": {
+      "includeFiles": "templates/**,static/**,app/**,users/**,_user/**,_admin/**,utils/**,atlasEvolutions/**"
+    }
+  }
 }
