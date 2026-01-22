@@ -2,8 +2,18 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
+from django.contrib.sites.models import Site
 from .models import Referral
 from django.conf import settings
+
+
+def get_site_url():
+    """Get the site URL from Django Sites framework."""
+    try:
+        site = Site.objects.get_current()
+        return f"https://{site.domain}"
+    except Exception:
+        return "https://example.com"
 
 
 @receiver(post_save, sender=Referral)
@@ -12,6 +22,7 @@ def notify_referrer(sender, instance, created, **kwargs):
         return
     ref = instance.referrer
     new_user = instance.referred
+    site_url = get_site_url()
     send_mail(
         subject="🌟 Your Referral Bonus is Activated! 🌟",
         message=(
@@ -24,14 +35,14 @@ def notify_referrer(sender, instance, created, **kwargs):
             f"- You're now one step closer to our exclusive VIP referral tiers (Total referrals: {ref.made_referrals.count()})\n"
             f"- Together, you and {new_user.first_name} can watch your investments grow\n\n"
             "Want to earn even more rewards? Keep sharing your unique link:\n"
-            f"{settings.APP_URL}/accounts/signup/?ref={ref.username}\n\n"
+            f"{site_url}/accounts/signup/?ref={ref.username}\n\n"
             "Thank you for being a vital part of our success story!\n\n"
             "Warm regards,\n"
             "Alexandra Peters\n"
             "Community Growth Manager\n"
             "Nexa Wealth\n\n"
             f"P.S. Every referral makes a difference! 🌱 We're here to support your financial journey - "
-            f"reach out anytime at {getattr(settings, 'SUPPORT_EMAIL', 'help.nexawealth@gmail.comcom')}"
+            f"reach out anytime at {getattr(settings, 'SUPPORT_EMAIL', 'help.nexawealth@gmail.com')}"
         ),
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[ref.email],

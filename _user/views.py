@@ -89,8 +89,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         # Investments
         context["investments"] = Investment.objects.filter(user=self.request.user)
 
-        context["REFERRAL_LINK"] = (
-            os.getenv("APP_URL") + f"/accounts/signup/?ref={self.request.user.username}"
+        context["REFERRAL_LINK"] = self.request.build_absolute_uri(
+            f"/accounts/signup/?ref={self.request.user.username}"
         )
 
         context["total_referrals"] = Referral.objects.filter(

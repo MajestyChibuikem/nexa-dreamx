@@ -228,5 +228,3 @@ CLOUDINARY_STORAGE = {
 }
 
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
-
-APP_URL = get_env_variable("APP_URL")
