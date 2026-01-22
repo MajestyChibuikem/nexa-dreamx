@@ -23,7 +23,9 @@ DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    ".vercel.app",  # Allows all Vercel subdomains
+    ".vercel.app",
+    ".railway.app",
+    ".up.railway.app",
 ]
 
 # Add custom domain if configured
@@ -31,9 +33,11 @@ CUSTOM_DOMAIN = os.environ.get("CUSTOM_DOMAIN")
 if CUSTOM_DOMAIN:
     ALLOWED_HOSTS.append(CUSTOM_DOMAIN)
 
-# CSRF trusted origins for Vercel
+# CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
+    "https://*.railway.app",
+    "https://*.up.railway.app",
 ]
 if CUSTOM_DOMAIN:
     CSRF_TRUSTED_ORIGINS.append(f"https://{CUSTOM_DOMAIN}")
@@ -100,10 +104,7 @@ ROOT_URLCONF = "atlasEvolutions.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates",
-            "/var/task/templates",  # Vercel serverless path
-        ],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -122,14 +123,13 @@ WSGI_APPLICATION = "atlasEvolutions.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Vercel Postgres - uses POSTGRES_URL environment variable
-POSTGRES_URL = os.environ.get("POSTGRES_URL")
+# Railway/Supabase/Vercel use DATABASE_URL or POSTGRES_URL
+DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("POSTGRES_URL")
 
-if POSTGRES_URL:
-    # Vercel Postgres deployment
+if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.config(
-            default=POSTGRES_URL,
+            default=DATABASE_URL,
             conn_max_age=600,
             conn_health_checks=True,
             ssl_require=True,
