@@ -100,7 +100,10 @@ ROOT_URLCONF = "atlasEvolutions.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "templates",
+            "/var/task/templates",  # Vercel serverless path
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
