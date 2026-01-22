@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "framework": null,
   "builds": [
     {
       "src": "atlasEvolutions/wsgi.py",
@@ -9,26 +8,16 @@
         "maxLambdaSize": "50mb",
         "runtime": "python3.12"
       }
-    },
-    {
-      "src": "build_vercel.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",
       "dest": "atlasEvolutions/wsgi.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "atlasEvolutions.settings"
-  }
+  ]
 }
