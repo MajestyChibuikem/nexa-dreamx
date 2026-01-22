@@ -2,23 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "atlasEvolutions/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb",
-        "runtime": "python3.12",
-        "includeFiles": ["templates/**", "static/**", "app/**", "users/**", "_user/**", "_admin/**", "utils/**", "atlasEvolutions/**"]
-      }
+      "src": "api/index.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "atlasEvolutions/wsgi.py"
+      "dest": "api/index.py"
     }
   ]
 }
