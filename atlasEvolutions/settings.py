@@ -206,9 +206,9 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = get_env_variable("EMAIL_HOST_USER", "your-email@example.com")
 EMAIL_HOST_PASSWORD = get_env_variable("EMAIL_HOST_PASSWORD", "your-email-password")
 
-DEFAULT_FROM_EMAIL = get_env_variable("DEFAULT_FROM_EMAIL")
-SUPPORT_EMAIL = get_env_variable("SUPPORT_EMAIL")
-ADMIN_EMAIL = get_env_variable("ADMIN_EMAIL")
+DEFAULT_FROM_EMAIL = get_env_variable("DEFAULT_FROM_EMAIL", "noreply@example.com")
+SUPPORT_EMAIL = get_env_variable("SUPPORT_EMAIL", "support@example.com")
+ADMIN_EMAIL = get_env_variable("ADMIN_EMAIL", "admin@example.com")
 
 LOGIN_REDIRECT_URL = "/dashboard/"  # Redirect after login
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"  # Redirect after logout
